@@ -15,6 +15,7 @@ namespace brackeys2020_buddiesteam3
 		Spikes,
 		BreakingPlatform,
 		MovingPlatform,
+		Goal,
 		FirstCharacterStart,
 		SecondCharacterStart
 	}
@@ -49,11 +50,6 @@ namespace brackeys2020_buddiesteam3
 			foreach (var layer in layers)
 			{
 
-				// if (layer. ttribute("style")?.Value ?? "")
-				{
-					
-				}
-
 				List<SVGLevelPiece> shapeList = new List<SVGLevelPiece>();
 
 				foreach (var element in layer.Elements())
@@ -68,7 +64,7 @@ namespace brackeys2020_buddiesteam3
 							(int)(float)element.Attribute("height")
 						);
 
-						Debug.WriteLine("Found Rectangle "+ retRectangle);
+						Debug.WriteLine("Found Rectangle " + retRectangle);
 
 						LevelPieceType type = LevelPieceType.Platform;
 						string style = element.Attribute("style")?.Value ?? "";
@@ -95,8 +91,8 @@ namespace brackeys2020_buddiesteam3
 							case "#7F0000":
 								type = LevelPieceType.Platform;
 								break;
-							case "#007f00":
-							case "#007F00":
+							case "#00ff00":
+							case "#00FF00":
 								type = LevelPieceType.Ground;
 								break;
 							case "#bf00bf":
@@ -114,6 +110,10 @@ namespace brackeys2020_buddiesteam3
 							case "#ffff00":
 							case "#FFFF00":
 								type = LevelPieceType.BreakingPlatform;
+								break;
+							case "#ff9000":
+							case "#FF9000":
+								type = LevelPieceType.Goal;
 								break;
 							default:
 								continue;

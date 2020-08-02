@@ -7,19 +7,22 @@ using Microsoft.Xna.Framework.Graphics;
 namespace brackeys2020_buddiesteam3
 {
 
-
 	public class Level
 	{
 
 		List<Rectangle> ground;
+		List<Rectangle> platforms;
 		List<Rectangle> spikes;
 		List<Button> buttons;
 		Vector2 firstCharacterSpawn;
 		Vector2 secondCharacterSpawn;
 
+		Rectangle Goal;
+
 		public Level(string svgFilePath)
 		{
 			ground = new List<Rectangle>();
+			platforms = new List<Rectangle>();
 			spikes = new List<Rectangle>();
 			buttons = new List<Button>();
 			firstCharacterSpawn = new Vector2(100, 200);
@@ -40,18 +43,25 @@ namespace brackeys2020_buddiesteam3
 						case LevelPieceType.Spikes:
 							spikes.Add(item.Rect);
 							break;
+						case LevelPieceType.Goal:
+							Goal = item.Rect;
+							break;
+						case LevelPieceType.FirstCharacterStart:
+							firstCharacterSpawn = new Vector2(item.Rect.X, item.Rect.Y);
+							Debug.WriteLine("Set character 1 spawn");
+							break;
+						case LevelPieceType.SecondCharacterStart:
+							secondCharacterSpawn = new Vector2(item.Rect.X, item.Rect.Y);
+							Debug.WriteLine("Set character 2 spawn");
+							break;
+
 						default:
+							Debug.WriteLine("piece not parsed of type " + item.Type);
 							break;
 					}
 				}
 			}
 
-		}
-
-		public Level(List<Rectangle> ground, List<Rectangle> spikes)
-		{
-			this.ground = ground;
-			this.spikes = spikes;
 		}
 
 		public void Reset(Character firstCharacter, Character secondCharacter)
@@ -77,7 +87,7 @@ namespace brackeys2020_buddiesteam3
 			bool outX = true;
 			// check horizontal collision
 			// ground
-			if (ground.Any(g => Collision.CheckCollision(
+			if (ground.Concat(platforms).Any(g => Collision.CheckCollision(
 				xCheckPos, dim, new Vector2(g.X, g.Y), new Vector2(g.Width, g.Height)
 				)))
 			{
@@ -129,7 +139,21 @@ namespace brackeys2020_buddiesteam3
 					Game1.Dot, // texture
 					item, // position
 					new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
-					Color.Brown, // color filter for the texture
+					Globals.Colors.Ground, // color filter for the texture
+					0f, // rotation
+					Vector2.Zero, // origin, rotation center point
+					SpriteEffects.None, // if the texture should be flipped
+					0 // depth, decides which 
+				);
+			}
+
+			foreach (var item in ground)
+			{
+				spriteBatch.Draw(
+					Game1.Dot, // texture
+					item, // position
+					new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
+					Globals.Colors.Platform, // color filter for the texture
 					0f, // rotation
 					Vector2.Zero, // origin, rotation center point
 					SpriteEffects.None, // if the texture should be flipped
@@ -144,13 +168,25 @@ namespace brackeys2020_buddiesteam3
 					Game1.Dot, // texture
 					item, // position
 					new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
-					Color.Red, // color filter for the texture
+					Globals.Colors.Spikes, // color filter for the texture
 					0f, // rotation
 					Vector2.Zero, // origin, rotation center point
 					SpriteEffects.None, // if the texture should be flipped
 					0 // depth, decides which 
 				);
 			}
+
+			spriteBatch.Draw(
+				Game1.Dot, // texture
+				Goal, // position
+				new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
+				Globals.Colors.Goal, // color filter for the texture
+				0f, // rotation
+				Vector2.Zero, // origin, rotation center point
+				SpriteEffects.None, // if the texture should be flipped
+				0 // depth, decides which 
+			);
+
 		}
 	}
 }

@@ -11,17 +11,19 @@ namespace brackeys2020_buddiesteam3
 
 		public float X;
 		public float Y;
-		public float Width = 10f;
-		public float Height = 10f;
+		// public float Width = 10f;
+		// public float Height = 10f;
 
 		public Color CharacterColor;
 
-		public Rectangle Rect => new Rectangle((int)X, (int)Y, (int)Width, (int)Height);
+		public Rectangle Rect => new Rectangle((int)X, (int)Y, (int)Globals.PlayerSize.X, (int)Globals.PlayerSize.Y);
 
 		// How strong gravity is
-		float gravityVelocityAmount = 1f;
+		const float gravityVelocityAmount = 1f;
 		// Player y velocity
 		float yVelocity = 0;
+
+		bool touchingGround = false;
 
 		public void Update(GameState gameState, Level level)
 		{
@@ -45,8 +47,9 @@ namespace brackeys2020_buddiesteam3
 					// if W or up was pressed this update
 
 					// Jump
-					// TODO: dont jump if not touching ground
-					yVelocity = -1f;
+					if (touchingGround)
+						yVelocity = -1f;
+
 				}
 			}
 
@@ -66,15 +69,36 @@ namespace brackeys2020_buddiesteam3
 			float deltaY = yVelocity * gameState.dt * fallSpeed;
 			float newY = Y + deltaY;
 
-			(bool x, bool y, bool damaged) = level.CheckCollision(new Vector2(X, Y), new Vector2(Width, Height), deltaX, deltaY);
+			(bool x, bool y, bool damaged) = level.CheckCollision(new Vector2(X, Y), Globals.PlayerSize, deltaX, deltaY);
+
+			bool collideOtherX = false;
+			bool collideOtherY = false;
+			// TODO: allow standing on top of other character
+			// IDEA: still allow walking through other player?
+			if (this == Game1.FirstCharacter)
+			{
+				// (collideOtherX, collideOtherY) = Collision.CheckCollision()
+			}
+			else if (this == Game1.SecondCharacter)
+			{
+
+			}
 
 			if (x)
 				X = newX;
 
+			touchingGround = false;
+
 			if (y)
+			{
 				Y = newY;
+
+			}
 			else
+			{
 				yVelocity = 0f;
+				touchingGround = true;
+			}
 
 			// Debug.WriteLine("Updated character");
 		}
@@ -89,7 +113,7 @@ namespace brackeys2020_buddiesteam3
 				CharacterColor, // color filter for the texture
 				0f, // rotation
 				Vector2.Zero, // origin, rotation center point
-				new Vector2(Width, Height),
+				Globals.PlayerSize,
 				//   10f, // scale
 				SpriteEffects.None, // if the texture should be flipped
 				0 // depth, decides which 

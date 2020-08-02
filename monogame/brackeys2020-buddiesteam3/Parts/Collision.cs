@@ -18,16 +18,6 @@ namespace brackeys2020_buddiesteam3
 			;
 		}
 
-		public static bool CheckCollision(int x1, int y1, int w1, int h1, int x2, int y2, int w2, int h2)
-		{
-			return
-				x1 < x2 + w2 &&
-				x1 + w1 > x2 &&
-				y1 < y2 + h2 &&
-				y1 + h1 > y2
-			;
-		}
-
 		public static bool CheckCollision(Vector2 pos1, Vector2 dim1, Vector2 pos2, Vector2 dim2)
 		{
 			return CheckCollision(pos1.X, pos1.Y, dim1.X, dim1.Y, pos2.X, pos2.Y, dim2.X, dim2.Y);

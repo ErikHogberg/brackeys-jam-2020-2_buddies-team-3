@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Input;
 namespace brackeys2020_buddiesteam3
 {
 
-	public class GameState
+	public struct GameState
 	{
 		public float dt;
 		public KeyboardState keyState;
@@ -50,16 +50,12 @@ namespace brackeys2020_buddiesteam3
 		// ground
 		List<Rectangle> ground = new List<Rectangle>();
 		List<Rectangle> spikes = new List<Rectangle>();
-		// How strong gravity is
-		float gravityVelocityAmount = 1f;
-		// Player y velocity
-		float yVelocity = 0;
 
 		//
 
 		Level currentLevel;
-		Character firstCharacter;
-		Character secondCharacter;
+		public static Character FirstCharacter;
+		public static Character SecondCharacter;
 
 
 		public Game1()
@@ -109,13 +105,13 @@ namespace brackeys2020_buddiesteam3
 
 			currentLevel = new Level("Levels/level1_svg_test.svg");
 
-			firstCharacter = new Character();
-			firstCharacter.CharacterColor = Color.DarkSlateBlue;
-			secondCharacter = new Character();
-			secondCharacter.ControlsEnabled = false;
-			secondCharacter.CharacterColor = Color.DarkRed;
+			FirstCharacter = new Character();
+			FirstCharacter.CharacterColor = Globals.Colors.FirstCharacter;
+			SecondCharacter = new Character();
+			SecondCharacter.ControlsEnabled = false;
+			SecondCharacter.CharacterColor = Globals.Colors.SecondCharacter;
 
-			currentLevel.Reset(firstCharacter, secondCharacter);
+			currentLevel.Reset(FirstCharacter, SecondCharacter);
 		}
 
 		protected override void LoadContent()
@@ -143,10 +139,11 @@ namespace brackeys2020_buddiesteam3
 			var mouseState = Mouse.GetState();
 			var keystate = Keyboard.GetState();
 
-			GameState gameState = new GameState();
-			gameState.dt = dt;
-			gameState.keyState = keystate;
-			gameState.oldKeyState = oldKeyboardState;
+			GameState gameState = new GameState{
+				dt = dt,
+				keyState = keystate,
+				oldKeyState = oldKeyboardState
+			};
 
 			// quit if esc is pressed
 			if (keystate.IsKeyDown(Keys.Escape))
@@ -184,11 +181,11 @@ namespace brackeys2020_buddiesteam3
 				// if backspace was pressed this update
 
 				// Reset
-				currentLevel.Reset(firstCharacter, secondCharacter);
+				currentLevel.Reset(FirstCharacter, SecondCharacter);
 			}
 
-			firstCharacter.Update(gameState, currentLevel);
-			secondCharacter.Update(gameState, currentLevel);
+			FirstCharacter.Update(gameState, currentLevel);
+			SecondCharacter.Update(gameState, currentLevel);
 
 			base.Update(gameTime);
 		}
@@ -214,8 +211,8 @@ namespace brackeys2020_buddiesteam3
 			);
 
 			// draw player square
-			firstCharacter.Draw(spriteBatch);
-			secondCharacter.Draw(spriteBatch);
+			FirstCharacter.Draw(spriteBatch);
+			SecondCharacter.Draw(spriteBatch);
 
 			// draw ground
 			currentLevel.Draw(spriteBatch);
