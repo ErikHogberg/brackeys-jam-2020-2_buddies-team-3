@@ -62,11 +62,11 @@ function love.mousepressed(x, y, button, istouch)
     end
 end
 
-function love.mousereleased(x, y, button, istouch)
-    if button == 1 then
+--[[function love.mousereleased(x, y, button, istouch)
+     if button == 1 then
         fireSlingshot(x, y) -- this totally awesome custom function is defined elsewhere
     end
-end
+end--]]
 
 function love.keypressed(key)
     if key == 'w' then dirY = -1 end
