@@ -7,6 +7,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace brackeys2020_buddiesteam3
 {
+
+	public class GameState
+	{
+		public float dt;
+		public KeyboardState keyState;
+		public KeyboardState oldKeyState;
+	}
+
 	public class Game1 : Game
 	{
 
@@ -33,7 +41,7 @@ namespace brackeys2020_buddiesteam3
 		public static SpriteFont Arial;
 
 		// A simple dot for drawing single color boxes and lines
-		Texture2D dot;
+		public static Texture2D Dot;
 
 		// position for an example player character
 		Vector2 testPlayerPosition = new Vector2(200, 200);
@@ -41,10 +49,18 @@ namespace brackeys2020_buddiesteam3
 		Vector2 testPlayerResetPosition;
 		// ground
 		List<Rectangle> ground = new List<Rectangle>();
+		List<Rectangle> spikes = new List<Rectangle>();
 		// How strong gravity is
 		float gravityVelocityAmount = 1f;
 		// Player y velocity
 		float yVelocity = 0;
+
+		//
+
+		Level currentLevel;
+		Character firstCharacter;
+		Character secondCharacter;
+
 
 		public Game1()
 		{
@@ -90,6 +106,12 @@ namespace brackeys2020_buddiesteam3
 			ground.Add(new Rectangle(300, 270, 40, 25));
 			ground.Add(new Rectangle(300, 200, 40, 25));
 
+
+			currentLevel = new Level("Levels/level1_svg_test.svg");
+			firstCharacter = new Character();
+			secondCharacter = new Character();
+			secondCharacter.ControlsEnabled = false;
+
 		}
 
 		protected override void LoadContent()
@@ -100,8 +122,11 @@ namespace brackeys2020_buddiesteam3
 			Arial = Content.Load<SpriteFont>("Arial");
 
 			// Create a 1x1 pixel white texture for the dot
-			dot = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-			dot.SetData(new Color[] { Color.White });
+			Dot = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+			Dot.SetData(new Color[] { Color.White });
+
+			// how to load a texture
+			// Texture2D texture = Content.Load<Texture2D>("folder/textureWithoutFileType");
 
 		}
 
@@ -201,7 +226,9 @@ namespace brackeys2020_buddiesteam3
 			)))
 			{
 				testPlayerPosition.Y = newY;
-			} else {
+			}
+			else
+			{
 				// Reset falling speed if hitting ground or ceiling
 				yVelocity = 0f;
 			}
@@ -230,7 +257,7 @@ namespace brackeys2020_buddiesteam3
 
 			// draw player square
 			spriteBatch.Draw(
-				dot, // texture
+				Dot, // texture
 				testPlayerPosition, // position
 				new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
 				Color.Orange, // color filter for the texture
@@ -245,7 +272,7 @@ namespace brackeys2020_buddiesteam3
 			foreach (var item in ground)
 			{
 				spriteBatch.Draw(
-					dot, // texture
+					Dot, // texture
 					item, // position
 					new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
 					Color.Brown, // color filter for the texture
