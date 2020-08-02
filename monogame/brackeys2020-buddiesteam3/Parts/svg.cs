@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Xml.Linq;
 using Microsoft.Xna.Framework;
@@ -34,19 +35,25 @@ namespace brackeys2020_buddiesteam3
 	{
 		const string svgNamespace = "{http://www.w3.org/2000/svg}";
 
-		public static SVGLevelPiece[][] Parse(string svgPath)
+		public static List<List<SVGLevelPiece>> Parse(string svgPath)
 		{
 
 			XDocument XD = XDocument.Load(uri: svgPath);
 			XElement SVG_Element = XD.Root;
 
-			var layerList = new List<SVGLevelPiece[]>();
+			var layerList = new List<List<SVGLevelPiece>>();
 			var layers = SVG_Element.Elements(svgNamespace + "g");
 
 			//Debug.WriteLine(layers.Count() + " layers found");
 
 			foreach (var layer in layers)
 			{
+
+				// if (layer. ttribute("style")?.Value ?? "")
+				{
+					
+				}
+
 				List<SVGLevelPiece> shapeList = new List<SVGLevelPiece>();
 
 				foreach (var element in layer.Elements())
@@ -55,16 +62,18 @@ namespace brackeys2020_buddiesteam3
 					if (element.Name.LocalName == "rect")
 					{
 						var retRectangle = new Rectangle(
-							(int)element.Attribute("x"),
-							(int)element.Attribute("y"),
-							(int)element.Attribute("width"),
-							(int)element.Attribute("height")
+							(int)(float)element.Attribute("x"),
+							(int)(float)element.Attribute("y"),
+							(int)(float)element.Attribute("width"),
+							(int)(float)element.Attribute("height")
 						);
 
-						LevelPieceType type = LevelPieceType.Platform;
-						string style = element.Attribute("style").Value;
+						Debug.WriteLine("Found Rectangle "+ retRectangle);
 
-						string color = element.Attribute("fill").Value ?? "#FFFFFF";
+						LevelPieceType type = LevelPieceType.Platform;
+						string style = element.Attribute("style")?.Value ?? "";
+
+						string color = element.Attribute("fill")?.Value ?? "#FFFFFF";
 						string[] words = style.Split(';');
 						foreach (var item in words)
 						{
@@ -107,8 +116,11 @@ namespace brackeys2020_buddiesteam3
 								type = LevelPieceType.BreakingPlatform;
 								break;
 							default:
-								break;
+								continue;
+								// break;
 						}
+
+						// TODO: check outline to link buttons to triggerable environment
 
 						shapeList.Add(new SVGLevelPiece(retRectangle, type));
 					}
@@ -128,10 +140,10 @@ namespace brackeys2020_buddiesteam3
 
 				}
 				//Debug.WriteLine("shapes in layer: " + shapeList.Count);
-				layerList.Add(shapeList.ToArray());
+				layerList.Add(shapeList);
 			}
 
-			return layerList.ToArray();
+			return layerList;
 		}
 	}
 }

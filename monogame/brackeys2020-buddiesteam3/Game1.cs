@@ -81,8 +81,8 @@ namespace brackeys2020_buddiesteam3
 			// GraphicsDevice.PresentationParameters.MultiSampleCount = 4;
 			// GraphicsDevice.BlendState = BlendState.AlphaBlend;
 			graphics.SynchronizeWithVerticalRetrace = true; // vsync
-			graphics.PreferredBackBufferWidth = 640;
-			graphics.PreferredBackBufferHeight = 360;
+			graphics.PreferredBackBufferWidth = 1280;//640;
+			graphics.PreferredBackBufferHeight = 720;//360;
 			graphics.ApplyChanges();
 
 			// disable framerate limit
@@ -108,10 +108,14 @@ namespace brackeys2020_buddiesteam3
 
 
 			currentLevel = new Level("Levels/level1_svg_test.svg");
+
 			firstCharacter = new Character();
+			firstCharacter.CharacterColor = Color.DarkSlateBlue;
 			secondCharacter = new Character();
 			secondCharacter.ControlsEnabled = false;
+			secondCharacter.CharacterColor = Color.DarkRed;
 
+			currentLevel.Reset(firstCharacter, secondCharacter);
 		}
 
 		protected override void LoadContent()
@@ -138,6 +142,11 @@ namespace brackeys2020_buddiesteam3
 			// Get which keyboard keys are pressed and where the mouse is, etc.
 			var mouseState = Mouse.GetState();
 			var keystate = Keyboard.GetState();
+
+			GameState gameState = new GameState();
+			gameState.dt = dt;
+			gameState.keyState = keystate;
+			gameState.oldKeyState = oldKeyboardState;
 
 			// quit if esc is pressed
 			if (keystate.IsKeyDown(Keys.Escape))
@@ -170,77 +179,26 @@ namespace brackeys2020_buddiesteam3
 					break;
 			}
 
-			float xDir = 0;
-
-			if (keystate.IsKeyDown(Keys.A) || keystate.IsKeyDown(Keys.Left))
-			{
-				// if A or left is held down this update, called every update either is still held
-				xDir = -1;
-			}
-			if (keystate.IsKeyDown(Keys.D) || keystate.IsKeyDown(Keys.Right))
-			{
-				// if D or right is held down this update, called every update either is still held
-				xDir = 1;
-			}
-			if (keystate.IsKeyPressed(oldKeyboardState, Keys.W) || keystate.IsKeyPressed(oldKeyboardState, Keys.Space))
-			{
-				// if W or up was pressed this update
-
-				// Jump
-				yVelocity = -1f;
-			}
 			if (keystate.IsKeyPressed(oldKeyboardState, Keys.Back))
 			{
 				// if backspace was pressed this update
 
 				// Reset
-				testPlayerPosition = new Vector2(200, 200);
+				currentLevel.Reset(firstCharacter, secondCharacter);
 			}
 
-			// Move test character
-			float speed = 100f;
-			float newX = testPlayerPosition.X + xDir * dt * speed;
-
-			// Check collision
-
-			// Left and right movement collision
-			if (!ground.Any(g => Collision.CheckCollision(
-				newX,
-				testPlayerPosition.Y,
-				10f, 10f,
-				g.X, g.Y, g.Width, g.Height
-			)))
-			{
-				testPlayerPosition.X = newX;
-			}
-
-			// Falling and jumping collision
-			yVelocity += gravityVelocityAmount * dt;
-			float newY = testPlayerPosition.Y + yVelocity * dt * speed;
-
-			if (!ground.Any(g => Collision.CheckCollision(
-				testPlayerPosition.X,
-				newY,
-				10f, 10f,
-				g.X, g.Y, g.Width, g.Height
-			)))
-			{
-				testPlayerPosition.Y = newY;
-			}
-			else
-			{
-				// Reset falling speed if hitting ground or ceiling
-				yVelocity = 0f;
-			}
-
+			firstCharacter.Update(gameState, currentLevel);
+			secondCharacter.Update(gameState, currentLevel);
 
 			base.Update(gameTime);
 		}
 
 		protected override void Draw(GameTime gameTime)
 		{
+			// Background color
 			GraphicsDevice.Clear(Color.CornflowerBlue);
 
+			// All 2D draw calls need to happen between spritebatch begin and end
 			spriteBatch.Begin(SpriteSortMode.FrontToBack);
 
 			spriteBatch.DrawString(
@@ -256,33 +214,11 @@ namespace brackeys2020_buddiesteam3
 			);
 
 			// draw player square
-			spriteBatch.Draw(
-				Dot, // texture
-				testPlayerPosition, // position
-				new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
-				Color.Orange, // color filter for the texture
-				0f, // rotation
-				Vector2.Zero, // origin, rotation center point
-				10f, // scale
-				SpriteEffects.None, // if the texture should be flipped
-				0 // depth, decides which 
-			);
+			firstCharacter.Draw(spriteBatch);
+			secondCharacter.Draw(spriteBatch);
 
 			// draw ground
-			foreach (var item in ground)
-			{
-				spriteBatch.Draw(
-					Dot, // texture
-					item, // position
-					new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
-					Color.Brown, // color filter for the texture
-					0f, // rotation
-					Vector2.Zero, // origin, rotation center point
-					SpriteEffects.None, // if the texture should be flipped
-					0 // depth, decides which 
-				);
-			}
-
+			currentLevel.Draw(spriteBatch);
 
 			spriteBatch.End();
 
