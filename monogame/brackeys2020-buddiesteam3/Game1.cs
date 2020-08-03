@@ -10,225 +10,250 @@ using Microsoft.Xna.Framework.Audio;
 namespace brackeys2020_buddiesteam3
 {
 
-	public struct GameState
-	{
-		public float dt;
-		public KeyboardState keyState;
-		public KeyboardState oldKeyState;
-	}
+    public struct GameState
+    {
+        public float dt;
+        public KeyboardState keyState;
+        public KeyboardState oldKeyState;
+    }
 
-	public class Game1 : Game
-	{
+    public class Game1 : Game
+    {
 
-		private GraphicsDeviceManager graphics;
-		private SpriteBatch spriteBatch;
+        private GraphicsDeviceManager graphics;
+        private SpriteBatch spriteBatch;
 
-		// values for caching window size
-		public static float ScreenWidth;
-		public static float ScreenHeight;
-
-
-		// Input
-
-		private KeyboardState oldKeyboardState;
-		private MouseState oldMouseState;
-
-		// Stuff for resetting mouse to center of screen, etc.
-		private Point mouseReset;
-		bool mouseLocked = false;
-
-		// content
-
-		// Arial font for rendering text
-		public static SpriteFont Arial;
-
-		// A simple dot for drawing single color boxes and lines
-		public static Texture2D Dot;
-
-		// Sounds
-		// make sure to set the correct processor in the content pipeline tool, song or sound effect
-		// difference between song and sound effects is that songs can be paused and looped easily, 
-		// while sound effects cant but sound effects can be played multiple times at the same time
-		// Song industrialAmbientSpaces;
-		// SoundEffect boxCrush;
-
-		//
-
-		Level currentLevel;
-		public static Character FirstCharacter;
-		public static Character SecondCharacter;
+        // values for caching window size
+        public static float ScreenWidth;
+        public static float ScreenHeight;
 
 
-		public Game1()
-		{
-			graphics = new GraphicsDeviceManager(this);
-			Content.RootDirectory = "Content";
+        // Input
 
-			// Show mouse
-			IsMouseVisible = true;
-		}
+        private KeyboardState oldKeyboardState;
+        private MouseState oldMouseState;
 
-		protected override void Initialize()
-		{
+        // Stuff for resetting mouse to center of screen, etc.
+        private Point mouseReset;
+        bool mouseLocked = false;
 
-			// Graphics settings
+        // content
 
-			// graphics.GraphicsProfile = GraphicsProfile.HiDef;
-			// graphics.PreferMultiSampling = true;
-			// GraphicsDevice.PresentationParameters.MultiSampleCount = 4;
-			// GraphicsDevice.BlendState = BlendState.AlphaBlend;
-			graphics.SynchronizeWithVerticalRetrace = true; // vsync
-			graphics.PreferredBackBufferWidth = 1280;//640;
-			graphics.PreferredBackBufferHeight = 720;//360;
-			graphics.ApplyChanges();
+        // Arial font for rendering text
+        public static SpriteFont Arial;
 
-			// disable framerate limit
-			IsFixedTimeStep = false;
-			// TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
+        // A simple dot for drawing single color boxes and lines
+        public static Texture2D Dot;
 
-			base.Initialize();
+        // Sounds
+        // make sure to set the correct processor in the content pipeline tool, song or sound effect
+        // difference between song and sound effects is that songs can be paused and looped easily, 
+        // while sound effects cant but sound effects can be played multiple times at the same time
+        float SoundVolume = 0.5f;
 
-			// Cache screen size once on startup
-			ScreenWidth = Window.ClientBounds.Width;
-			ScreenHeight = Window.ClientBounds.Height;
+        Song industrialAmbientSpaces;
+        public static SoundEffect box_crush_005;
 
-			// Make screen size cache update when resizing window
-			this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
+        //
+
+        Level currentLevel;
+        public static Character FirstCharacter;
+        public static Character SecondCharacter;
 
 
-			currentLevel = new Level("Levels/level1_svg_test.svg");
+        public Game1()
+        {
+            graphics = new GraphicsDeviceManager(this);
+            Content.RootDirectory = "Content";
 
-			FirstCharacter = new Character();
-			FirstCharacter.CharacterColor = Globals.Colors.FirstCharacter;
-			SecondCharacter = new Character();
-			SecondCharacter.ControlsEnabled = false;
-			SecondCharacter.CharacterColor = Globals.Colors.SecondCharacter;
+            // Show mouse
+            IsMouseVisible = true;
+        }
 
-			currentLevel.Reset(FirstCharacter, SecondCharacter);
-		}
+        protected override void Initialize()
+        {
 
-		protected override void LoadContent()
-		{
-			spriteBatch = new SpriteBatch(GraphicsDevice);
+            // Graphics settings
 
-			// Load the font from the Content Pipeline
-			Arial = Content.Load<SpriteFont>("Arial");
+            // graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            // graphics.PreferMultiSampling = true;
+            // GraphicsDevice.PresentationParameters.MultiSampleCount = 4;
+            // GraphicsDevice.BlendState = BlendState.AlphaBlend;
+            graphics.SynchronizeWithVerticalRetrace = true; // vsync
+            graphics.PreferredBackBufferWidth = 1280;//640;
+            graphics.PreferredBackBufferHeight = 720;//360;
+            graphics.ApplyChanges();
 
-			// Create a 1x1 pixel white texture for the dot
-			Dot = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
-			Dot.SetData(new Color[] { Color.White });
+            // disable framerate limit
+            IsFixedTimeStep = false;
+            // TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
 
-			// how to load a texture
-			// Texture2D texture = Content.Load<Texture2D>("folder/textureWithoutFileType");
+            base.Initialize();
 
-			// industrialAmbientSpaces = Content.Load<Song>("Sounds/Industrial_Ambient_Spaces_04");
-			// boxCrush = Content.Load<SoundEffect>("Sounds/box_crush_005");
+            // Cache screen size once on startup
+            ScreenWidth = Window.ClientBounds.Width;
+            ScreenHeight = Window.ClientBounds.Height;
 
-		}
+            // Make screen size cache update when resizing window
+            this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
-		protected override void Update(GameTime gameTime)
-		{
-			// Get time since last update
-			float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			// Get which keyboard keys are pressed and where the mouse is, etc.
-			var mouseState = Mouse.GetState();
-			var keystate = Keyboard.GetState();
+            currentLevel = new Level("Levels/level1_svg_test.svg");
 
-			GameState gameState = new GameState{
-				dt = dt,
-				keyState = keystate,
-				oldKeyState = oldKeyboardState
-			};
+            FirstCharacter = new Character();
+            FirstCharacter.CharacterColor = Globals.Colors.FirstCharacter;
+            SecondCharacter = new Character();
+            SecondCharacter.ControlsEnabled = false;
+            SecondCharacter.CharacterColor = Globals.Colors.SecondCharacter;
 
-			// quit if esc is pressed
-			if (keystate.IsKeyDown(Keys.Escape))
-				Exit();
+            currentLevel.Reset(FirstCharacter, SecondCharacter);
+        }
 
-			// Get how far the mouse has moved since last update
-			Point diff = mouseState.Position - oldMouseState.Position;
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			switch (mouseState.LeftButton)
-			{
-				case ButtonState.Pressed:
-					if (oldMouseState.LeftButton == ButtonState.Released)
-					{
-						// if mouse was clicked this update
-					}
-					else
-					{
-						// if mouse was held this update
-					}
-					break;
-				case ButtonState.Released:
-					if (oldMouseState.LeftButton == ButtonState.Pressed)
-					{
-						// if mouse was released this update
-					}
-					else
-					{
-						// if mouse was not pressed at all this update or the previous update
-					}
-					break;
-			}
+            // Load the font from the Content Pipeline
+            Arial = Content.Load<SpriteFont>("Arial");
 
-			if (keystate.IsKeyPressed(oldKeyboardState, Keys.Back))
-			{
-				// if backspace was pressed this update
+            // Create a 1x1 pixel white texture for the dot
+            Dot = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
+            Dot.SetData(new Color[] { Color.White });
 
-				// Reset
-				currentLevel.Reset(FirstCharacter, SecondCharacter);
-			}
+            // how to load a texture
+            // Texture2D texture = Content.Load<Texture2D>("folder/textureWithoutFileType");
 
-			FirstCharacter.Update(gameState, currentLevel);
-			SecondCharacter.Update(gameState, currentLevel);
+            //industrialAmbientSpaces = Content.Load<Song>("Sounds/Songs/Industrial_Ambient_Spaces_04");
+            box_crush_005 = Content.Load<SoundEffect>("Sounds/SFX/box_crush_005");
+            spriteBatch = new SpriteBatch(GraphicsDevice);
 
-			base.Update(gameTime);
-		}
+            // Starting Song
+            MediaPlayer.Volume = SoundVolume;
+            industrialAmbientSpaces = Content.Load<Song>("Sounds/Songs/Industrial_Ambient_Spaces_04");
+            MediaPlayer.Play(industrialAmbientSpaces);
+            // looping the song
+            MediaPlayer.IsRepeating = true;
 
-		protected override void Draw(GameTime gameTime)
-		{
-			// Background color
-			GraphicsDevice.Clear(Globals.Colors.Background);
 
-			// All 2D draw calls need to happen between spritebatch begin and end
-			spriteBatch.Begin(SpriteSortMode.FrontToBack);
+        }
 
-			spriteBatch.DrawString(
-				Arial,
-				"Test text",
-				new Vector2(20, 20),
-				Color.Beige,
-				0,
-				Vector2.Zero,
-				1,
-				SpriteEffects.None,
-				1.0f
-			);
+        protected override void Update(GameTime gameTime)
+        {
+            // Get time since last update
+            float dt = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-			// draw player square
-			FirstCharacter.Draw(spriteBatch);
-			SecondCharacter.Draw(spriteBatch);
+            // Get which keyboard keys are pressed and where the mouse is, etc.
+            var mouseState = Mouse.GetState();
+            var keystate = Keyboard.GetState();
 
-			// draw ground
-			currentLevel.Draw(spriteBatch);
+            GameState gameState = new GameState
+            {
+                dt = dt,
+                keyState = keystate,
+                oldKeyState = oldKeyboardState
+            };
 
-			spriteBatch.End();
+            // quit if esc is pressed
+            if (keystate.IsKeyDown(Keys.Escape))
+                Exit();
 
-			base.Draw(gameTime);
-		}
+            // Get how far the mouse has moved since last update
+            Point diff = mouseState.Position - oldMouseState.Position;
 
-		private void Window_ClientSizeChanged(object sender, EventArgs e)
-		{
-			graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
-			graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+            switch (mouseState.LeftButton)
+            {
+                case ButtonState.Pressed:
+                    if (oldMouseState.LeftButton == ButtonState.Released)
+                    {
+                        // if mouse was clicked this update
+                    }
+                    else
+                    {
+                        // if mouse was held this update
+                    }
+                    break;
+                case ButtonState.Released:
+                    if (oldMouseState.LeftButton == ButtonState.Pressed)
+                    {
+                        // if mouse was released this update
+                    }
+                    else
+                    {
+                        // if mouse was not pressed at all this update or the previous update
+                    }
+                    break;
+            }
 
-			// ScreenWidth = graphics.PreferredBackBufferWidth;
-			ScreenWidth = Window.ClientBounds.Width;
-			// ScreenHeight = graphics.PreferredBackBufferHeight;
-			ScreenHeight = Window.ClientBounds.Height;
+            if (keystate.IsKeyPressed(oldKeyboardState, Keys.Back))
+            {
+                // if backspace was pressed this update
 
-			graphics.ApplyChanges();
-		}
-	}
+                // Reset
+                currentLevel.Reset(FirstCharacter, SecondCharacter);
+            }
+
+            //Changing Song Volume
+            if (keystate.IsKeyPressed(oldKeyboardState, Keys.K))
+            {
+                SoundVolume += 0.1f;
+                MediaPlayer.Volume = SoundVolume;
+
+            }
+            if (keystate.IsKeyPressed(oldKeyboardState, Keys.L))
+            {
+                SoundVolume -= 0.1f;
+                MediaPlayer.Volume = SoundVolume;
+            }
+
+            FirstCharacter.Update(gameState, currentLevel);
+            SecondCharacter.Update(gameState, currentLevel);
+
+            base.Update(gameTime);
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            // Background color
+            GraphicsDevice.Clear(Globals.Colors.Background);
+
+            // All 2D draw calls need to happen between spritebatch begin and end
+            spriteBatch.Begin(SpriteSortMode.FrontToBack);
+
+            spriteBatch.DrawString(
+                Arial,
+                "Test text",
+                new Vector2(20, 20),
+                Color.Beige,
+                0,
+                Vector2.Zero,
+                1,
+                SpriteEffects.None,
+                1.0f
+            );
+
+            // draw player square
+            FirstCharacter.Draw(spriteBatch);
+            SecondCharacter.Draw(spriteBatch);
+
+            // draw ground
+            currentLevel.Draw(spriteBatch);
+
+            spriteBatch.End();
+
+            base.Draw(gameTime);
+        }
+
+        private void Window_ClientSizeChanged(object sender, EventArgs e)
+        {
+            graphics.PreferredBackBufferWidth = Window.ClientBounds.Width;
+            graphics.PreferredBackBufferHeight = Window.ClientBounds.Height;
+
+            // ScreenWidth = graphics.PreferredBackBufferWidth;
+            ScreenWidth = Window.ClientBounds.Width;
+            // ScreenHeight = graphics.PreferredBackBufferHeight;
+            ScreenHeight = Window.ClientBounds.Height;
+
+            graphics.ApplyChanges();
+        }
+    }
 }
