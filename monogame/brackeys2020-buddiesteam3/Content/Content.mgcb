@@ -20,3 +20,69 @@
 /processorParam:TextureFormat=Compressed
 /build:Arial.spritefont
 
+#begin Sounds/SFX/box_crush_005.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/box_crush_005.wav
+
+#begin Sounds/SFX/box_handling_005.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/box_handling_005.wav
+
+#begin Sounds/SFX/guitar_ac_swell_processed_012.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/guitar_ac_swell_processed_012.wav
+
+#begin Sounds/SFX/metal_hit_004.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/metal_hit_004.wav
+
+#begin Sounds/SFX/org_short_R_to_L_002.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/org_short_R_to_L_002.wav
+
+#begin Sounds/SFX/owl_notification_005.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/owl_notification_005.wav
+
+#begin Sounds/SFX/small_fridge_open_001.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/small_fridge_open_001.wav
+
+#begin Sounds/SFX/spacecraft_pad_006.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Sounds/SFX/spacecraft_pad_006.wav
+
+#begin Sounds/Songs/dark_space_017.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/Songs/dark_space_017.wav
+
+#begin Sounds/Songs/Industrial_Ambient_Spaces_04.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/Songs/Industrial_Ambient_Spaces_04.wav
+
+#begin Sounds/Songs/mod_drone_007.wav
+/importer:WavImporter
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Sounds/Songs/mod_drone_007.wav
+
