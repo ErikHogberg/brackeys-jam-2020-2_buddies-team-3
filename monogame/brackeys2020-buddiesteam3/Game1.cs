@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 namespace brackeys2020_buddiesteam3
 {
@@ -43,13 +45,12 @@ namespace brackeys2020_buddiesteam3
 		// A simple dot for drawing single color boxes and lines
 		public static Texture2D Dot;
 
-		// position for an example player character
-		Vector2 testPlayerPosition = new Vector2(200, 200);
-		// reset position
-		Vector2 testPlayerResetPosition;
-		// ground
-		List<Rectangle> ground = new List<Rectangle>();
-		List<Rectangle> spikes = new List<Rectangle>();
+		// Sounds
+		// make sure to set the correct processor in the content pipeline tool, song or sound effect
+		// difference between song and sound effects is that songs can be paused and looped easily, 
+		// while sound effects cant but sound effects can be played multiple times at the same time
+		// Song industrialAmbientSpaces;
+		// SoundEffect boxCrush;
 
 		//
 
@@ -94,14 +95,6 @@ namespace brackeys2020_buddiesteam3
 			// Make screen size cache update when resizing window
 			this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
-			// Set the reset/restart position to the initial position of the example character
-			testPlayerResetPosition = testPlayerPosition;
-
-			// Add ground
-			ground.Add(new Rectangle(100, 300, 400, 50));
-			ground.Add(new Rectangle(300, 270, 40, 25));
-			ground.Add(new Rectangle(300, 200, 40, 25));
-
 
 			currentLevel = new Level("Levels/level1_svg_test.svg");
 
@@ -127,6 +120,9 @@ namespace brackeys2020_buddiesteam3
 
 			// how to load a texture
 			// Texture2D texture = Content.Load<Texture2D>("folder/textureWithoutFileType");
+
+			// industrialAmbientSpaces = Content.Load<Song>("Sounds/Industrial_Ambient_Spaces_04");
+			// boxCrush = Content.Load<SoundEffect>("Sounds/box_crush_005");
 
 		}
 
