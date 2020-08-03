@@ -189,7 +189,7 @@ namespace brackeys2020_buddiesteam3
 		protected override void Draw(GameTime gameTime)
 		{
 			// Background color
-			GraphicsDevice.Clear(Color.CornflowerBlue);
+			GraphicsDevice.Clear(Globals.Colors.Background);
 
 			// All 2D draw calls need to happen between spritebatch begin and end
 			spriteBatch.Begin(SpriteSortMode.FrontToBack);

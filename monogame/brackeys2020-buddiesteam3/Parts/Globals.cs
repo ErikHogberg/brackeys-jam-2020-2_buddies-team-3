@@ -6,15 +6,17 @@ namespace brackeys2020_buddiesteam3
 	{
 		public static class Colors
 		{
+			public static Color Background = Color.CornflowerBlue;
+
 			public static Color FirstCharacter = Color.DarkSlateBlue;
 			public static Color SecondCharacter = Color.DarkRed;
 
+			// Level pieces
 			public static Color Ground = Color.Brown;
 			public static Color Platform = Color.LightSteelBlue;
 			public static Color Spikes = Color.DarkRed;
 
 			public static Color Goal = Color.Gold;
-			
 			
 		}
 
