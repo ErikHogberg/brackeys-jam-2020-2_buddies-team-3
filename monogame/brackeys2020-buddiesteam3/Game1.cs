@@ -45,6 +45,9 @@ namespace brackeys2020_buddiesteam3
 		// A simple dot for drawing single color boxes and lines
 		public static Texture2D Dot;
 
+		public static Texture2D FirstPlayerTexture;
+		public static Texture2D SecondPlayerTexture;
+
 		// Sounds
 		// make sure to set the correct processor in the content pipeline tool, song or sound effect
 		// difference between song and sound effects is that songs can be paused and looped easily, 
@@ -135,7 +138,8 @@ namespace brackeys2020_buddiesteam3
 			var mouseState = Mouse.GetState();
 			var keystate = Keyboard.GetState();
 
-			GameState gameState = new GameState{
+			GameState gameState = new GameState
+			{
 				dt = dt,
 				keyState = keystate,
 				oldKeyState = oldKeyboardState
