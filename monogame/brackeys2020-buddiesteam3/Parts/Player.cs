@@ -17,12 +17,19 @@ namespace brackeys2020_buddiesteam3
 		public Color CharacterColor;
 		public Texture2D CharacterTexture;
 
+		public Vector2 Pos => new Vector2(X, Y);
+		public Vector2 Dim => Globals.PlayerSize;
 		public Rectangle Rect => new Rectangle((int)X, (int)Y, (int)Globals.PlayerSize.X, (int)Globals.PlayerSize.Y);
 
 		// How strong gravity is
 		// const float gravityVelocityAmount = 3.5f;
 		// Player y velocity
 		float yVelocity = 0;
+
+		public void Reset()
+		{
+			yVelocity = 0;
+		}
 
 		bool touchingGround = false;
 
@@ -72,7 +79,14 @@ namespace brackeys2020_buddiesteam3
 			float deltaY = yVelocity * gameState.dt * fallSpeed;
 			float newY = Y + deltaY;
 
-			(bool x, bool y, bool damaged) = level.CheckCollision(new Vector2(X, Y), Globals.PlayerSize, deltaX, deltaY);
+			// Collision with level
+			(bool x, bool y) = level.CheckCollision(new Vector2(X, Y), Globals.PlayerSize, deltaX, deltaY);
+
+			if (level.CheckSpikeCollision(Pos, Dim))
+			{
+				level.Reset(Game1.FirstCharacter, Game1.SecondCharacter);
+				return;
+			}
 
 			float checkX = X;
 			if (x)

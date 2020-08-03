@@ -70,17 +70,17 @@ namespace brackeys2020_buddiesteam3
 		{
 			firstCharacter.X = firstCharacterSpawn.X;
 			firstCharacter.Y = firstCharacterSpawn.Y;
+			firstCharacter.Reset();
 			secondCharacter.X = secondCharacterSpawn.X;
 			secondCharacter.Y = secondCharacterSpawn.Y;
+			secondCharacter.Reset();
 
 			Debug.WriteLine("Reset characters to spawn");
 		}
 
 		// x, y, damaged
-		public (bool, bool, bool) CheckCollision(Vector2 pos, Vector2 dim, float xMovement, float yMovement)
+		public (bool, bool) CheckCollision(Vector2 pos, Vector2 dim, float xMovement, float yMovement)
 		{
-			bool damaged = false;
-
 			// var xCheckRect = new Rectangle((int)pos.X + (int)xMovement, rect.Y, rect.Width, rect.Height);
 			// var yCheckRect = new Rectangle(rect.X, rect.Y + (int)yMovement, rect.Width, rect.Height);
 			var xCheckPos = new Vector2(pos.X + xMovement, pos.Y);
@@ -90,19 +90,12 @@ namespace brackeys2020_buddiesteam3
 			// check horizontal collision
 			// ground
 			if (ground.Concat(platforms).Any(g => Collision.CheckCollision(
-				xCheckPos, dim, new Vector2(g.X, g.Y), new Vector2(g.Width, g.Height)
+				xCheckPos, dim, g
 				)))
 			{
 				outX = false;
 			}
-			// spikes
-			if (spikes.Any(g => Collision.CheckCollision(
-				xCheckPos, dim, new Vector2(g.X, g.Y), new Vector2(g.Width, g.Height)
-			)))
-			{
-				outX = false;
-				damaged = true;
-			}
+
 
 			// check vertical collision
 			if (outX)
@@ -111,25 +104,28 @@ namespace brackeys2020_buddiesteam3
 			bool outY = true;
 
 			if (ground.Concat(platforms).Any(g => Collision.CheckCollision(
-				yCheckPos, dim, new Vector2(g.X, g.Y), new Vector2(g.Width, g.Height)
+				yCheckPos, dim, g
 			)))
 			{
 				outY = false;
 			}
-			// spikes
-			if (spikes.Any(g => Collision.CheckCollision(
-				yCheckPos, dim, new Vector2(g.X, g.Y), new Vector2(g.Width, g.Height)
-			)))
-			{
-				outY = false;
-				damaged = true;
-			}
+
 
 			// TODO: trigger buttons
 			// TODO: destroy platforms on jump/leave
 
 			// TODO: return collision results
-			return (outX, outY, damaged);
+			return (outX, outY);
+		}
+
+		public bool CheckSpikeCollision(Vector2 pos, Vector2 dim)
+		{
+			return spikes.Any(g => Collision.CheckCollision(pos, dim, g));
+		}
+
+		public bool CheckGoalCollision(Vector2 pos, Vector2 dim)
+		{
+			return Collision.CheckCollision(pos, dim, Goal);
 		}
 
 		public void Draw(SpriteBatch spriteBatch)
@@ -163,7 +159,7 @@ namespace brackeys2020_buddiesteam3
 				);
 			}
 
-			// draw ground
+			// draw spikes
 			foreach (var item in spikes)
 			{
 				spriteBatch.Draw(

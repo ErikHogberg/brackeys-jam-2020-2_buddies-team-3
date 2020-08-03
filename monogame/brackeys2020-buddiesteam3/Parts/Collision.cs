@@ -28,5 +28,10 @@ namespace brackeys2020_buddiesteam3
 			return CheckCollision(rect1.X, rect1.Y, rect1.Width, rect1.Height, rect2.X, rect2.Y, rect2.Width, rect2.Height);
 		}
 
+		public static bool CheckCollision(Vector2 pos1, Vector2 dim1, Rectangle rect2)
+		{
+			return CheckCollision(pos1.X, pos1.Y, dim1.X, dim1.Y, rect2.X, rect2.Y, rect2.Width, rect2.Height);
+		}
+
 	}
 }

@@ -235,7 +235,7 @@ namespace brackeys2020_buddiesteam3
 			GraphicsDevice.Clear(Globals.Colors.Background);
 
 			// All 2D draw calls need to happen between spritebatch begin and end
-			spriteBatch.Begin(SpriteSortMode.FrontToBack);
+			spriteBatch.Begin(SpriteSortMode.Deferred, null, SamplerState.LinearWrap);
 
 			spriteBatch.DrawString(
 				Arial,
