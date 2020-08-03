@@ -116,9 +116,13 @@ namespace brackeys2020_buddiesteam3
 								type = LevelPieceType.Goal;
 								break;
 							default:
+								Debug.WriteLine("svg skipped rect " + retRectangle + " with color " + color);
 								continue;
 								// break;
 						}
+
+						Debug.WriteLine("rect type " + type);
+
 
 						// TODO: check outline to link buttons to triggerable environment
 

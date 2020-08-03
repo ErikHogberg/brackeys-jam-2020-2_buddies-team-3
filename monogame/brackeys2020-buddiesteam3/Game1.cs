@@ -45,8 +45,8 @@ namespace brackeys2020_buddiesteam3
 		// A simple dot for drawing single color boxes and lines
 		public static Texture2D Dot;
 
-		public static Texture2D FirstPlayerTexture;
-		public static Texture2D SecondPlayerTexture;
+		public static Texture2D FirstCharacterTexture;
+		public static Texture2D SecondCharacterTexture;
 
 		// Sounds
 		// make sure to set the correct processor in the content pipeline tool, song or sound effect
@@ -100,16 +100,6 @@ namespace brackeys2020_buddiesteam3
 			// Make screen size cache update when resizing window
 			this.Window.ClientSizeChanged += new EventHandler<EventArgs>(Window_ClientSizeChanged);
 
-
-			currentLevel = new Level("Levels/level1_svg_test.svg");
-
-			FirstCharacter = new Character();
-			FirstCharacter.CharacterColor = Globals.Colors.FirstCharacter;
-			SecondCharacter = new Character();
-			SecondCharacter.ControlsEnabled = false;
-			SecondCharacter.CharacterColor = Globals.Colors.SecondCharacter;
-
-			currentLevel.Reset(FirstCharacter, SecondCharacter);
 		}
 
 		protected override void LoadContent()
@@ -122,6 +112,16 @@ namespace brackeys2020_buddiesteam3
 			// Create a 1x1 pixel white texture for the dot
 			Dot = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
 			Dot.SetData(new Color[] { Color.White });
+
+			if (Globals.Textures.FirstCharacterTextureName == "")
+				FirstCharacterTexture = Dot;
+			else
+				FirstCharacterTexture = Content.Load<Texture2D>(Globals.Textures.FirstCharacterTextureName);
+
+			if (Globals.Textures.SecondCharacterTextureName == "")
+				SecondCharacterTexture = Dot;
+			else
+				SecondCharacterTexture = Content.Load<Texture2D>(Globals.Textures.SecondCharacterTextureName);
 
 			// how to load a texture
 			// Texture2D texture = Content.Load<Texture2D>("folder/textureWithoutFileType");
@@ -136,6 +136,20 @@ namespace brackeys2020_buddiesteam3
 			MediaPlayer.Play(industrialAmbientSpaces);
 			// looping the song
 			MediaPlayer.IsRepeating = true;
+
+			// Level and characters
+
+			currentLevel = new Level("Levels/level1_svg_test.svg");
+
+			FirstCharacter = new Character();
+			FirstCharacter.CharacterColor = Globals.Colors.FirstCharacter;
+			FirstCharacter.CharacterTexture = FirstCharacterTexture;
+			SecondCharacter = new Character();
+			SecondCharacter.ControlsEnabled = false;
+			SecondCharacter.CharacterColor = Globals.Colors.SecondCharacter;
+			SecondCharacter.CharacterTexture = SecondCharacterTexture;
+
+			currentLevel.Reset(FirstCharacter, SecondCharacter);
 
 		}
 

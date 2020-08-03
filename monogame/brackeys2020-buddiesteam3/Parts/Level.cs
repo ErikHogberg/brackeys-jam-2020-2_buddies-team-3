@@ -37,8 +37,10 @@ namespace brackeys2020_buddiesteam3
 					switch (item.Type)
 					{
 						case LevelPieceType.Ground:
-						case LevelPieceType.Platform:
 							ground.Add(item.Rect);
+							break;
+						case LevelPieceType.Platform:
+							platforms.Add(item.Rect);
 							break;
 						case LevelPieceType.Spikes:
 							spikes.Add(item.Rect);
@@ -108,7 +110,7 @@ namespace brackeys2020_buddiesteam3
 
 			bool outY = true;
 
-			if (ground.Any(g => Collision.CheckCollision(
+			if (ground.Concat(platforms).Any(g => Collision.CheckCollision(
 				yCheckPos, dim, new Vector2(g.X, g.Y), new Vector2(g.Width, g.Height)
 			)))
 			{
@@ -147,7 +149,7 @@ namespace brackeys2020_buddiesteam3
 				);
 			}
 
-			foreach (var item in ground)
+			foreach (var item in platforms)
 			{
 				spriteBatch.Draw(
 					Game1.Dot, // texture

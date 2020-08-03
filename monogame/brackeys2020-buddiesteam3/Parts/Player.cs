@@ -15,11 +15,12 @@ namespace brackeys2020_buddiesteam3
 		// public float Height = 10f;
 
 		public Color CharacterColor;
+		public Texture2D CharacterTexture;
 
 		public Rectangle Rect => new Rectangle((int)X, (int)Y, (int)Globals.PlayerSize.X, (int)Globals.PlayerSize.Y);
 
 		// How strong gravity is
-		const float gravityVelocityAmount = 1f;
+		// const float gravityVelocityAmount = 3.5f;
 		// Player y velocity
 		float yVelocity = 0;
 
@@ -27,7 +28,6 @@ namespace brackeys2020_buddiesteam3
 
 		public void Update(GameState gameState, Level level)
 		{
-
 
 			float xDir = 0;
 			if (ControlsEnabled)
@@ -49,7 +49,7 @@ namespace brackeys2020_buddiesteam3
 					// Jump
 					if (touchingGround)
 					{
-						yVelocity = -1f;
+						yVelocity = -Globals.JumpForce;
 						//playsfx
 
 					}
@@ -58,14 +58,14 @@ namespace brackeys2020_buddiesteam3
 
 
 			// Move test character
-			float speed = 100f;
-			float deltaX = xDir * gameState.dt * speed;
+			// float speed = 100f;
+			float deltaX = xDir * gameState.dt * Globals.RunSpeed;
 			float newX = X + deltaX;
 
 			// Falling and jumping collision
 			const float yVelocityCap = 4f;
 			float fallSpeed = 100f;
-			yVelocity += gravityVelocityAmount * gameState.dt;
+			yVelocity += Globals.GravityAmount * gameState.dt;
 			if (yVelocity > yVelocityCap)
 				yVelocity = yVelocityCap;
 
@@ -115,7 +115,8 @@ namespace brackeys2020_buddiesteam3
 		public void Draw(SpriteBatch spriteBatch)
 		{
 			spriteBatch.Draw(
-				Game1.Dot, // texture
+				// Game1.Dot, // texture
+				CharacterTexture,
 						   // Rect, // position
 				new Vector2(X, Y),
 				new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
