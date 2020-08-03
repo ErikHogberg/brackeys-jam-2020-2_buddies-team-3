@@ -74,25 +74,26 @@ namespace brackeys2020_buddiesteam3
 
 			(bool x, bool y, bool damaged) = level.CheckCollision(new Vector2(X, Y), Globals.PlayerSize, deltaX, deltaY);
 
-			bool collideOtherX = false;
-			bool collideOtherY = false;
-			// TODO: allow standing on top of other character
-			// IDEA: still allow walking through other player?
-			if (this == Game1.FirstCharacter)
-			{
-				// (collideOtherX, collideOtherY) = Collision.CheckCollision()
-			}
-			else if (this == Game1.SecondCharacter)
-			{
+			float checkX = X;
+			if (x)
+				checkX = newX;
 
-			}
+			Character otherCharacter = Game1.SecondCharacter;
+			if (this == Game1.SecondCharacter)
+				otherCharacter = Game1.FirstCharacter;
+
+			bool collideOtherY = Collision.CheckCollision(
+				checkX, Y, Globals.PlayerSize.X, Globals.PlayerSize.Y,
+				otherCharacter.X, otherCharacter.Y, Globals.PlayerSize.X, Globals.PlayerSize.Y
+			);
 
 			if (x)
 				X = newX;
+
 			bool wasTouchingGround = touchingGround;
 			touchingGround = false;
 
-			if (y)
+			if (y && !collideOtherY)
 			{
 				Y = newY;
 
@@ -117,8 +118,9 @@ namespace brackeys2020_buddiesteam3
 			spriteBatch.Draw(
 				// Game1.Dot, // texture
 				CharacterTexture,
-						   // Rect, // position
+				// Rect, // position
 				new Vector2(X, Y),
+				// Rect,
 				new Rectangle(0, 0, 1, 1), // texture source rectangle, which part of the texture will be used
 				CharacterColor, // color filter for the texture
 				0f, // rotation

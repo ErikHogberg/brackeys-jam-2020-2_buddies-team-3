@@ -88,7 +88,7 @@ namespace brackeys2020_buddiesteam3
 			graphics.ApplyChanges();
 
 			// disable framerate limit
-			IsFixedTimeStep = false;
+			IsFixedTimeStep = true;
 			// TargetElapsedTime = TimeSpan.FromSeconds(1f / 60f);
 
 			base.Initialize();
