@@ -48,8 +48,11 @@ namespace brackeys2020_buddiesteam3
 
 					// Jump
 					if (touchingGround)
+					{
 						yVelocity = -1f;
+						//playsfx
 
+					}
 				}
 			}
 
@@ -86,7 +89,7 @@ namespace brackeys2020_buddiesteam3
 
 			if (x)
 				X = newX;
-
+			bool wasTouchingGround = touchingGround;
 			touchingGround = false;
 
 			if (y)
@@ -97,6 +100,12 @@ namespace brackeys2020_buddiesteam3
 			else
 			{
 				yVelocity = 0f;
+
+				//SFX plays when player touches ground
+				if (!wasTouchingGround)
+				{
+					//Game1.box_crush_005.CreateInstance().Play();
+				}
 				touchingGround = true;
 			}
 

@@ -52,8 +52,10 @@ namespace brackeys2020_buddiesteam3
 		// make sure to set the correct processor in the content pipeline tool, song or sound effect
 		// difference between song and sound effects is that songs can be paused and looped easily, 
 		// while sound effects cant but sound effects can be played multiple times at the same time
-		// Song industrialAmbientSpaces;
-		// SoundEffect boxCrush;
+		float SoundVolume = 0.5f;
+
+		Song industrialAmbientSpaces;
+		public static SoundEffect box_crush_005;
 
 		//
 
@@ -124,10 +126,20 @@ namespace brackeys2020_buddiesteam3
 			// how to load a texture
 			// Texture2D texture = Content.Load<Texture2D>("folder/textureWithoutFileType");
 
-			// industrialAmbientSpaces = Content.Load<Song>("Sounds/Industrial_Ambient_Spaces_04");
-			// boxCrush = Content.Load<SoundEffect>("Sounds/box_crush_005");
+			//industrialAmbientSpaces = Content.Load<Song>("Sounds/Songs/Industrial_Ambient_Spaces_04");
+			box_crush_005 = Content.Load<SoundEffect>("Sounds/SFX/box_crush_005");
+			spriteBatch = new SpriteBatch(GraphicsDevice);
+
+			// Starting Song
+			MediaPlayer.Volume = SoundVolume;
+			industrialAmbientSpaces = Content.Load<Song>("Sounds/Songs/Industrial_Ambient_Spaces_04");
+			MediaPlayer.Play(industrialAmbientSpaces);
+			// looping the song
+			MediaPlayer.IsRepeating = true;
 
 		}
+
+
 
 		protected override void Update(GameTime gameTime)
 		{
@@ -182,6 +194,19 @@ namespace brackeys2020_buddiesteam3
 
 				// Reset
 				currentLevel.Reset(FirstCharacter, SecondCharacter);
+			}
+
+			//Changing Song Volume
+			if (keystate.IsKeyPressed(oldKeyboardState, Keys.K))
+			{
+				SoundVolume += 0.1f;
+				MediaPlayer.Volume = SoundVolume;
+
+			}
+			if (keystate.IsKeyPressed(oldKeyboardState, Keys.L))
+			{
+				SoundVolume -= 0.1f;
+				MediaPlayer.Volume = SoundVolume;
 			}
 
 			FirstCharacter.Update(gameState, currentLevel);
