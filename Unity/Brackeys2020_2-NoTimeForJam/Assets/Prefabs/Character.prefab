@@ -155,6 +155,7 @@ MonoBehaviour:
   AirSpeedPercentage: 0.5
   JumpForce: 10
   JumpSteeringMax: 15
+  CoyoteTime: 0.3
   RecordInput: 1
   LeftBinding: {fileID: -5975315916042150918, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   RightBinding: {fileID: 1088759194569340860, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}

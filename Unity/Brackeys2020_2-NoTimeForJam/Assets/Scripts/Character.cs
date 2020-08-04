@@ -35,6 +35,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	[Min(0)]
 	public float JumpForce = 2f;
 	public float JumpSteeringMax = 1f;
+	public float CoyoteTime = .1f;
 	[Space]
 	public bool RecordInput = true;
 
@@ -47,10 +48,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
 
 	Rigidbody2D rb;
+	SpriteRenderer[] spriteRenderers;
 
 	float xDir = 0f;
 	Vector3 initPos;
-	bool touchingGround = false;
+	bool touchingGround => groundTimer < CoyoteTime;
+	float groundTimer = 0f;
+	bool jumpAllowed = true;
 
 	float timer = 0f;
 
@@ -60,6 +64,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
+		spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
 		LeftBinding.action.performed += PressLeft;
 		RightBinding.action.performed += PressRight;
@@ -147,10 +152,11 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		if (active)
 		{
-			if (touchingGround)
+			if (touchingGround && jumpAllowed)
 			{
 				var rotation = Quaternion.Euler(0f, 0f, -xDir * JumpSteeringMax);
 				rb.AddForce(rotation * Vector3.up * JumpForce, ForceMode2D.Impulse);
+				jumpAllowed = false;
 			}
 		}
 	}
@@ -167,11 +173,16 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
 		if (!active)
 		{
 			return;
+		}
+
+		if (groundTimer < CoyoteTime)
+		{
+			groundTimer += Time.deltaTime;
 		}
 
 		float speed = xDir * Speed * Time.deltaTime;
@@ -181,6 +192,29 @@ public class Character : MonoBehaviour, IComparable<Character>
 			if (!touchingGround)
 			{
 				speed *= AirSpeedPercentage;
+			}
+			else
+			{
+				float angleDiff = Quaternion.Angle(Quaternion.identity, transform.rotation);
+				// if (Mathf.Abs(angleDiff) > 45f)
+				{
+					transform.rotation = Quaternion.Euler(0, 0, angleDiff % 90f);
+				}
+
+				if (xDir > 0)
+				{
+					foreach (var item in spriteRenderers)
+					{
+						item.flipX = false;
+					}
+				}
+				else
+				{
+					foreach (var item in spriteRenderers)
+					{
+						item.flipX = true;
+					}
+				}
 			}
 
 			rb.AddForce(Vector3.right * speed, ForceMode2D.Force);
@@ -211,14 +245,22 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	}
 
+	private void OnCollisionEnter2D(Collision2D other)
+	{
+		groundTimer = 0f;
+		jumpAllowed = true;
+	}
+
 	private void OnCollisionStay2D(Collision2D other)
 	{
-		touchingGround = true;
+		// touchingGround = true;
+		groundTimer = 0f;
+		jumpAllowed = true;
 	}
 
-	private void OnCollisionExit2D(Collision2D other)
-	{
-		touchingGround = false;
+	// private void OnCollisionExit2D(Collision2D other)
+	// {
+	// 	touchingGround = false;
 
-	}
+	// }
 }
