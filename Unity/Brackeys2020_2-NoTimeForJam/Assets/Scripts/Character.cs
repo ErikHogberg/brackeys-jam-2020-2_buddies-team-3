@@ -38,6 +38,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public float CoyoteTime = .1f;
 	[Space]
 	public bool RecordInput = true;
+	public float VelocityCap = 100f;
 
 	[Space]
 	public InputActionReference LeftBinding;
@@ -130,7 +131,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	void PressLeft(CallbackContext c)
 	{
-		xDir = -c.ReadValue<float>();
+		xDir = -1;
+		// xDir = -c.ReadValue<float>();
 	}
 	void ReleaseLeft(CallbackContext c)
 	{
@@ -140,7 +142,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	void PressRight(CallbackContext c)
 	{
-		xDir = c.ReadValue<float>();
+		xDir = 1;
+		// xDir = c.ReadValue<float>();
 	}
 	void ReleaseRight(CallbackContext c)
 	{
@@ -170,22 +173,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	}
 
-
-
-	// Update is called once per frame
-	void FixedUpdate()
+	void Move(float dt)
 	{
-		if (!active)
-		{
-			return;
-		}
-
-		if (groundTimer < CoyoteTime)
-		{
-			groundTimer += Time.deltaTime;
-		}
-
-		float speed = xDir * Speed * Time.deltaTime;
+		float speed = xDir * Speed * dt;
 
 		if (Mathf.Abs(speed) > 0)
 		{
@@ -196,10 +186,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 			else
 			{
 				float angleDiff = Quaternion.Angle(Quaternion.identity, transform.rotation);
-				// if (Mathf.Abs(angleDiff) > 45f)
-				{
-					transform.rotation = Quaternion.Euler(0, 0, angleDiff % 90f);
-				}
+				transform.rotation = Quaternion.Euler(0, 0, angleDiff % 90f);
 
 				if (xDir > 0)
 				{
@@ -218,6 +205,29 @@ public class Character : MonoBehaviour, IComparable<Character>
 			}
 
 			rb.AddForce(Vector3.right * speed, ForceMode2D.Force);
+		}
+	}
+
+	// Update is called once per frame
+	void FixedUpdate()
+	{
+		if (!active)
+		{
+
+			return;
+		}
+
+		if (groundTimer < CoyoteTime)
+		{
+			groundTimer += Time.deltaTime;
+		}
+
+		Move(Time.deltaTime);
+
+		if (rb.velocity.sqrMagnitude > VelocityCap * VelocityCap)
+		{
+			rb.velocity = rb.velocity.normalized * VelocityCap;
+			print("hit velocity cap");
 		}
 	}
 
