@@ -23,7 +23,7 @@ public class MovingPlatform : Triggerable
 	void Start()
 	{
 		// initPos = transform.position;
-		// running = StartOnInit;
+		running = StartOnInit;
 
 		targetPositions.Add(transform.position);
 		foreach (var item in Targets)
@@ -149,5 +149,19 @@ public class MovingPlatform : Triggerable
 			running = StartOnInit;
 		}
 	}
+
+    // private void OnCollisionEnter2D(Collision2D other) {
+    //     if (other.gameObject.CompareTag("Player"))
+    //     {
+    //         other.transform.parent = transform;
+    //     }
+    // }
+
+    // private void OnCollisionExit2D(Collision2D other) {
+    //     if (other.gameObject.CompareTag("Player"))
+    //     {
+    //         other.transform.parent = transform.parent;
+    //     }
+    // }
 
 }

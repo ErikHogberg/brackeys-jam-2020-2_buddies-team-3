@@ -12,42 +12,53 @@ public class Button : MonoBehaviour
 {
 
 	public bool TriggerOnce = false;
+	int objectPressing = 0;
 
 	public Triggerable[] ThingsToTrigger;
 
-    [Space]
-    public Color PressColor;
-    private Color initColor;
+	[Space]
+	public Color PressColor;
+	private Color initColor;
 
-    private SpriteRenderer spriteRenderer;
+	private SpriteRenderer spriteRenderer;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        initColor = spriteRenderer.color;
+		spriteRenderer = GetComponent<SpriteRenderer>();
+		initColor = spriteRenderer.color;
 	}
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.CompareTag("Player"))
+		if (other.CompareTag("Player") || other.CompareTag("Box"))
 		{
-            spriteRenderer.color = PressColor;
-			foreach (var item in ThingsToTrigger)
+			if (objectPressing < 1)
 			{
-				item.Press();
+				spriteRenderer.color = PressColor;
+				foreach (var item in ThingsToTrigger)
+				{
+					item.Press();
+				}
 			}
+
+			objectPressing++;
 		}
+
 	}
 
 	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (!TriggerOnce && other.CompareTag("Player"))
+		if (other.CompareTag("Player") || other.CompareTag("Box"))
 		{
-            spriteRenderer.color = initColor;
-			foreach (var item in ThingsToTrigger)
+			objectPressing--;
+			if (!TriggerOnce && objectPressing < 1)
 			{
-				item.Release();
+				spriteRenderer.color = initColor;
+				foreach (var item in ThingsToTrigger)
+				{
+					item.Release();
+				}
 			}
 		}
 	}

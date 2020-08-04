@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Goal
   - Spike
+  - Box
   layers:
   - Default
   - TransparentFX
