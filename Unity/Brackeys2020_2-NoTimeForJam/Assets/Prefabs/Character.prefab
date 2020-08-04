@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 751042837181758630}
   m_Layer: 0
   m_Name: Character
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -129,7 +129,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -151,8 +151,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterNumber: 0
-  Speed: 5000
-  JumpForce: 80
+  Speed: 500
+  JumpForce: 10
   LeftBinding: {fileID: -5975315916042150918, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   RightBinding: {fileID: 1088759194569340860, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   JumpBinding: {fileID: -6326988159615463495, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
