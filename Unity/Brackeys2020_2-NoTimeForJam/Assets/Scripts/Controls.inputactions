@@ -1,8 +1,8 @@
 {
-    "name": "New Controls",
+    "name": "Controls",
     "maps": [
         {
-            "name": "New action map",
+            "name": "action map",
             "id": "411f800f-4833-42df-9c85-e25fcc44d4f7",
             "actions": [
                 {
