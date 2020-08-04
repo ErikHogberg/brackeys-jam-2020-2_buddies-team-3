@@ -8,6 +8,20 @@ using static UnityEngine.InputSystem.InputAction;
 
 public class Character : MonoBehaviour, IComparable<Character>
 {
+	private enum InputType
+	{
+		PressLeft,
+		ReleaseLeft,
+		PressRight,
+		ReleaseRight,
+		Jump
+	}
+
+	private struct InputHistoryEntry
+	{
+		InputType input;
+		float timeStamp;
+	}
 
 	public static int CurrentCharacterIndex = 0;
 	private static List<Character> instances = new List<Character>();
@@ -16,8 +30,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	[Min(0)]
 	public float Speed = 100f;
+	[Range(0f, 1f)]
+	public float AirSpeedPercentage = .5f;
 	[Min(0)]
 	public float JumpForce = 2f;
+	public float JumpSteeringMax = 1f;
+	[Space]
+	public bool RecordInput = true;
 
 	[Space]
 	public InputActionReference LeftBinding;
@@ -32,6 +51,10 @@ public class Character : MonoBehaviour, IComparable<Character>
 	float xDir = 0f;
 	Vector3 initPos;
 	bool touchingGround = false;
+
+	float timer = 0f;
+
+	Queue<InputHistoryEntry> inputHistory = new Queue<InputHistoryEntry>();
 
 	// Start is called before the first frame update
 	void Start()
@@ -95,6 +118,11 @@ public class Character : MonoBehaviour, IComparable<Character>
 		}
 	}
 
+	public void RestartToBeginning()
+	{
+
+	}
+
 	void PressLeft(CallbackContext c)
 	{
 		xDir = -c.ReadValue<float>();
@@ -121,7 +149,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		{
 			if (touchingGround)
 			{
-				rb.AddForce(Vector3.up * JumpForce, ForceMode2D.Impulse);
+				var rotation = Quaternion.Euler(0f, 0f, -xDir * JumpSteeringMax);
+				rb.AddForce(rotation * Vector3.up * JumpForce, ForceMode2D.Impulse);
 			}
 		}
 	}
@@ -145,7 +174,17 @@ public class Character : MonoBehaviour, IComparable<Character>
 			return;
 		}
 
-		rb.AddForce(Vector3.right * xDir * Speed * Time.deltaTime, ForceMode2D.Force);
+		float speed = xDir * Speed * Time.deltaTime;
+
+		if (Mathf.Abs(speed) > 0)
+		{
+			if (!touchingGround)
+			{
+				speed *= AirSpeedPercentage;
+			}
+
+			rb.AddForce(Vector3.right * speed, ForceMode2D.Force);
+		}
 	}
 
 	public int CompareTo(Character other)
