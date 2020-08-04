@@ -496,6 +496,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dac60d8e6353d584088922d1df0e82bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Speed: 500
+  JumpForce: 10
   LeftBinding: {fileID: -5975315916042150918, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   RightBinding: {fileID: 1088759194569340860, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   JumpBinding: {fileID: -6326988159615463495, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}

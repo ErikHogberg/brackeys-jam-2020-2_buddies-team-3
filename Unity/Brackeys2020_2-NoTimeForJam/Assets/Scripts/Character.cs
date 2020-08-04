@@ -8,10 +8,10 @@ using static UnityEngine.InputSystem.InputAction;
 public class Character : MonoBehaviour
 {
 
-    [Min(0)]
-    public float Speed = 100f;
-    [Min(0)]
-    public float JumpForce = 2f;
+	[Min(0)]
+	public float Speed = 100f;
+	[Min(0)]
+	public float JumpForce = 2f;
 
 	[Space]
 	public InputActionReference LeftBinding;
@@ -19,12 +19,14 @@ public class Character : MonoBehaviour
 	public InputActionReference JumpBinding;
 	public InputActionReference ResetBinding;
 
-	Rigidbody rb;
+	Rigidbody2D rb;
+
+	float xDir = 0f;
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		rb = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody2D>();
 
 		LeftBinding.action.performed += PressLeft;
 		RightBinding.action.performed += PressRight;
@@ -44,25 +46,28 @@ public class Character : MonoBehaviour
 
 	void PressLeft(CallbackContext c)
 	{
-
+		xDir = -c.ReadValue<float>();
 	}
 	void ReleaseLeft(CallbackContext c)
 	{
-
+		if(xDir < 0)
+			xDir = 0;
 	}
 
 	void PressRight(CallbackContext c)
 	{
-
+		xDir = c.ReadValue<float>();
 	}
 	void ReleaseRight(CallbackContext c)
 	{
-
+		if(xDir > 0)
+			xDir = 0;
 	}
 
 	void PressJump(CallbackContext c)
 	{
-
+		// TODO: check if touching ground
+		rb.AddForce(Vector3.up * JumpForce, ForceMode2D.Impulse);
 	}
 	void ReleaseJump(CallbackContext c)
 	{
@@ -79,6 +84,6 @@ public class Character : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-
+		rb.AddForce(Vector3.right* xDir * Speed * Time.deltaTime, ForceMode2D.Force);
 	}
 }
