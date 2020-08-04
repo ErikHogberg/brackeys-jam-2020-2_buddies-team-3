@@ -60,6 +60,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 	float timer = 0f;
 
 	Queue<InputHistoryEntry> inputHistory = new Queue<InputHistoryEntry>();
+	InputHistoryEntry currentEntry;
+	InputHistoryEntry nextEntry;
 
 	// Start is called before the first frame update
 	void Start()
@@ -98,6 +100,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	public void Restart()
 	{
+		timer = 0;
 		transform.position = initPos;
 		rb.velocity = Vector2.zero;
 		rb.angularVelocity = 0f;
@@ -126,7 +129,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	public void RestartToBeginning()
 	{
-
+		RestartAll();
+		CurrentCharacterIndex = 0;
 	}
 
 	void PressLeft(CallbackContext c)
@@ -211,6 +215,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 	// Update is called once per frame
 	void FixedUpdate()
 	{
+		timer += Time.deltaTime;
+
 		if (!active)
 		{
 
@@ -227,7 +233,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 		if (rb.velocity.sqrMagnitude > VelocityCap * VelocityCap)
 		{
 			rb.velocity = rb.velocity.normalized * VelocityCap;
-			print("hit velocity cap");
+			// print("hit velocity cap");
 		}
 	}
 
@@ -265,7 +271,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		// touchingGround = true;
 		groundTimer = 0f;
-		jumpAllowed = true;
+		// jumpAllowed = true;
 	}
 
 	// private void OnCollisionExit2D(Collision2D other)
