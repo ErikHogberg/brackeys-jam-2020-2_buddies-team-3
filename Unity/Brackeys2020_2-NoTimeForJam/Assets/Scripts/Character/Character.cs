@@ -32,6 +32,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public float Speed = 100f;
 	[Min(0)]
 	public float MinSpeed = 5f;
+	public bool UseMinSpeedInAir = false;
+	[Space]
 
 	[Range(0f, 1f)]
 	public float AirSpeedPercentage = .5f;
@@ -239,9 +241,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 			rb.velocity = rb.velocity.normalized * VelocityCap;
 			// print("hit velocity cap");
 		}
-		else if (moving && Mathf.Abs(rb.velocity.x) < MinSpeed)
+		else if (moving && (UseMinSpeedInAir || touchingGround))
 		{
-			float xVelocity = MinSpeed * xDir;
+			float xVelocity = Mathf.Abs(rb.velocity.x) * xDir;
+			if (Mathf.Abs(rb.velocity.x) < MinSpeed)
+			{
+				xVelocity = MinSpeed * xDir;
+			}
 			rb.velocity = new Vector2(xVelocity, rb.velocity.y);
 
 			// if ((xDir > 0 && rb.velocity.x < 0) || (xDir < 0 && rb.velocity.x > 0))
