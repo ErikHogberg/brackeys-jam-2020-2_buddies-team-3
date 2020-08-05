@@ -284,6 +284,18 @@ PrefabInstance:
       propertyPath: m_Constraints
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6431438711301988375, guid: 859da31b05001c745aa362dab194e003, type: 3}
+      propertyPath: VelocityCap
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431438711301988375, guid: 859da31b05001c745aa362dab194e003, type: 3}
+      propertyPath: MinSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431438711301988375, guid: 859da31b05001c745aa362dab194e003, type: 3}
+      propertyPath: JumpForce
+      value: 8
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 859da31b05001c745aa362dab194e003, type: 3}
 --- !u!4 &253065232 stripped
@@ -1356,6 +1368,14 @@ PrefabInstance:
     - target: {fileID: 6431438711301988375, guid: 859da31b05001c745aa362dab194e003, type: 3}
       propertyPath: CharacterNumber
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431438711301988375, guid: 859da31b05001c745aa362dab194e003, type: 3}
+      propertyPath: JumpForce
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6431438711301988375, guid: 859da31b05001c745aa362dab194e003, type: 3}
+      propertyPath: VelocityCap
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 6431438711368553464, guid: 859da31b05001c745aa362dab194e003, type: 3}
       propertyPath: m_Color.r
