@@ -52,7 +52,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public InputActionReference ResetBinding;
 
 	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
-	public bool moving => Mathf.Abs(xDir) > 0;
+	bool moving => Mathf.Abs(xDir) > 0;
+	bool recording => RecordInput && active; 
 
 	Rigidbody2D rb;
 	SpriteRenderer[] spriteRenderers;
@@ -75,8 +76,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		rb = GetComponent<Rigidbody2D>();
 		spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
 
-		LeftBinding.action.performed += PressLeft;
-		RightBinding.action.performed += PressRight;
+		LeftBinding.action.started += PressLeft;
+		RightBinding.action.started += PressRight;
 		JumpBinding.action.started += PressJump;
 		ResetBinding.action.started += PressReset;
 
@@ -285,6 +286,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
+		// if (other.gameObject.CompareTag("StopBounce"))
+		// 	rb.velocity = new Vector2(rb.velocity.x, 0);
+
 		groundTimer = 0f;
 		jumpAllowed = true;
 	}
