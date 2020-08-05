@@ -30,6 +30,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	[Min(0)]
 	public float Speed = 100f;
+	[Min(0)]
+	public float MinSpeed = 5f;
+
 	[Range(0f, 1f)]
 	public float AirSpeedPercentage = .5f;
 	[Min(0)]
@@ -47,6 +50,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public InputActionReference ResetBinding;
 
 	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
+	public bool moving => Mathf.Abs(xDir) > 0;
 
 	Rigidbody2D rb;
 	SpriteRenderer[] spriteRenderers;
@@ -181,7 +185,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		float speed = xDir * Speed * dt;
 
-		if (Mathf.Abs(speed) > 0)
+		if (moving)
 		{
 			if (!touchingGround)
 			{
@@ -233,6 +237,18 @@ public class Character : MonoBehaviour, IComparable<Character>
 		if (rb.velocity.sqrMagnitude > VelocityCap * VelocityCap)
 		{
 			rb.velocity = rb.velocity.normalized * VelocityCap;
+			// print("hit velocity cap");
+		}
+		else if (moving && Mathf.Abs(rb.velocity.x) < MinSpeed)
+		{
+			float xVelocity = MinSpeed * xDir;
+			rb.velocity = new Vector2(xVelocity, rb.velocity.y);
+
+			// if ((xDir > 0 && rb.velocity.x < 0) || (xDir < 0 && rb.velocity.x > 0))
+			// {
+			// 	rb.velocity= new Vector2(-rb.velocity.x, rb.velocity.y);
+			// }
+			// rb.velocity = rb.velocity.normalized * MinSpeed;
 			// print("hit velocity cap");
 		}
 	}
