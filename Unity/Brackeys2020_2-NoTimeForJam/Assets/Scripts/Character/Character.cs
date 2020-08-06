@@ -19,8 +19,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	private struct InputHistoryEntry
 	{
-		InputType input;
-		float timeStamp;
+		public InputType input;
+		public float timeStamp;
 	}
 
 	public static int CurrentCharacterIndex = 0;
@@ -53,7 +53,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
 	bool moving => Mathf.Abs(xDir) > 0;
-	bool recording => RecordInput && active; 
+	bool recording => RecordInput && active;
 
 	Rigidbody2D rb;
 	SpriteRenderer[] spriteRenderers;
@@ -140,30 +140,52 @@ public class Character : MonoBehaviour, IComparable<Character>
 		CurrentCharacterIndex = 0;
 	}
 
+	void Record(InputType input)
+	{
+		if (recording)
+		{
+			inputHistory.Enqueue(new InputHistoryEntry
+			{
+				input = input,
+				timeStamp = timer
+			});
+		}
+	}
+
 	void PressLeft(CallbackContext c)
 	{
+		Record(InputType.PressLeft);
 		xDir = -1;
 		// xDir = -c.ReadValue<float>();
 	}
 	void ReleaseLeft(CallbackContext c)
 	{
+		Record(InputType.ReleaseLeft);
 		if (xDir < 0)
 			xDir = 0;
 	}
 
 	void PressRight(CallbackContext c)
 	{
+		Record(InputType.PressRight);
 		xDir = 1;
 		// xDir = c.ReadValue<float>();
 	}
 	void ReleaseRight(CallbackContext c)
 	{
+		Record(InputType.ReleaseRight);
 		if (xDir > 0)
 			xDir = 0;
 	}
 
 	void PressJump(CallbackContext c)
 	{
+		PressJump();
+	}
+
+	void PressJump()
+	{
+		Record(InputType.Jump);
 		if (active)
 		{
 			if (touchingGround && jumpAllowed)
@@ -226,8 +248,16 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		if (!active)
 		{
+			// if (RecordInput)
+			// {
+			// TODO: disable input
 
-			return;
+			// }
+			// else
+			{
+
+				return;
+			}
 		}
 
 		if (groundTimer < CoyoteTime)
@@ -281,6 +311,35 @@ public class Character : MonoBehaviour, IComparable<Character>
 			return;
 		}
 
+		// if (other.CompareTag(""))
+		{
+			groundTimer = 0f;
+			// jumpAllowed = true;
+
+		}
+
+
+	}
+
+	private void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.CompareTag("Spike"))
+		{
+			return;
+		}
+
+		if (other.CompareTag("Goal"))
+		{
+			return;
+		}
+
+		// if (other.CompareTag(""))
+		{
+			groundTimer = 0f;
+
+			// jumpAllowed = true;
+		}
+
 
 	}
 
@@ -289,20 +348,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 		// if (other.gameObject.CompareTag("StopBounce"))
 		// 	rb.velocity = new Vector2(rb.velocity.x, 0);
 
-		groundTimer = 0f;
+		// groundTimer = 0f;
 		jumpAllowed = true;
 	}
 
 	private void OnCollisionStay2D(Collision2D other)
 	{
-		// touchingGround = true;
-		groundTimer = 0f;
-		// jumpAllowed = true;
+		// groundTimer = 0f;
 	}
 
-	// private void OnCollisionExit2D(Collision2D other)
-	// {
-	// 	touchingGround = false;
-
-	// }
 }
