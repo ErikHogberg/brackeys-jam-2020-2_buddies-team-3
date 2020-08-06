@@ -222,7 +222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3795303346852734517, guid: 859da31b05001c745aa362dab194e003, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3795303346852734517, guid: 859da31b05001c745aa362dab194e003, type: 3}
       propertyPath: m_LocalScale.x
@@ -301,6 +301,11 @@ PrefabInstance:
 --- !u!4 &253065232 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3795303346852734517, guid: 859da31b05001c745aa362dab194e003, type: 3}
+  m_PrefabInstance: {fileID: 253065231}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &253065233 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6431438711301988372, guid: 859da31b05001c745aa362dab194e003, type: 3}
   m_PrefabInstance: {fileID: 253065231}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &290388284
@@ -399,6 +404,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 1337769070}
   - {fileID: 253065232}
   - {fileID: 999008320}
   m_Father: {fileID: 0}
@@ -448,7 +454,7 @@ Transform:
   - {fileID: 1294155323}
   - {fileID: 20895915}
   m_Father: {fileID: 568333361}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1002119733 stripped
 Transform:
@@ -610,6 +616,7 @@ GameObject:
   - component: {fileID: 1337769069}
   - component: {fileID: 1337769068}
   - component: {fileID: 1337769071}
+  - component: {fileID: 1337769072}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -676,11 +683,11 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1337769067}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.97, y: -1.57, z: -62.9}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0.48137784, y: 6.146567, z: -38.02765}
+  m_LocalScale: {x: 0.6333966, y: 0.6333966, z: 0.6333966}
   m_Children: []
-  m_Father: {fileID: 253065232}
-  m_RootOrder: 2
+  m_Father: {fileID: 568333361}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!82 &1337769071
 AudioSource:
@@ -778,6 +785,21 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &1337769072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337769067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b16c6c869cfd2264e9e297a92ca74903, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  FollowTarget: {fileID: 253065233}
+  Buffer: {x: 2, y: 1}
+  UseOffset: 0
 --- !u!4 &1348545098 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7361413906338839666, guid: 9e8edfc0adf7354458ffca0ecfb7496b, type: 3}
