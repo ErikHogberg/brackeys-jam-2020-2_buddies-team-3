@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ public class SettingUIScript : MonoBehaviour
 	public TMP_Dropdown ResolutionDropdown;
 
 	bool fullscreen = false;
-	int width;
-	int height;
+	int width = 1920;
+	int height = 1080;
 	int hz;
 
 	private void Start()
@@ -49,9 +50,35 @@ public class SettingUIScript : MonoBehaviour
 	public void SelectResolutionDropdown(int value)
 	{
 		var option = Screen.resolutions[value];
-        width = option.width;
-        height = option.height;
-        hz = option.refreshRate;
+		width = option.width;
+		height = option.height;
+		hz = option.refreshRate;
+
+	}
+
+	public void WidthInput(string value)
+	{
+		if (value == "")
+		{
+			width = 1920;
+		}
+		else
+		{
+			width = Int32.Parse(value);
+		}
+
+	}
+	public void HeightInput(string value)
+	{
+		if (value == "")
+		{
+			height = 1080;
+		}
+		else
+		{
+			height = Int32.Parse(value);
+		}
+
 	}
 
 }
