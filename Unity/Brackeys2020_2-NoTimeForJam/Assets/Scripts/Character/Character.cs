@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
+using UnityEngine.SceneManagement;
 using static UnityEngine.InputSystem.InputAction;
 
 public class Character : MonoBehaviour, IComparable<Character>
@@ -433,7 +433,15 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 				if (AllFinished)
 				{
-					// TODO: win level
+					string sceneName = SceneManager.GetActiveScene().name;
+					print("finished level " + sceneName +"!");
+					if (LevelButtonUIScript.LevelProgress.ContainsKey(sceneName))
+					{
+						LevelButtonUIScript.LevelProgress[sceneName] = true;
+					} else{
+						LevelButtonUIScript.LevelProgress.Add(sceneName, true);
+					}
+						SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
 				}
 				else if (AllPrevFinished)
 				{
