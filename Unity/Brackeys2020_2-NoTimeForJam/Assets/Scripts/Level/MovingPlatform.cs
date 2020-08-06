@@ -8,6 +8,7 @@ public class MovingPlatform : Triggerable, IResettable
 	public bool StartOnInit = false;
 
 	public bool Loop = false;
+	public bool LoopToBeginning = false;
 	public float Speed = 100f;
 
 	private int currentTarget = 1;
@@ -69,7 +70,14 @@ public class MovingPlatform : Triggerable, IResettable
 					currentTarget -= 2;
 					if (Loop)
 					{
-						runningForward = false;
+						if (LoopToBeginning)
+						{
+							currentTarget = 0;
+						}
+						else
+						{
+							runningForward = false;
+						}
 					}
 					else
 					{
