@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dion Level Ideas/Platform Level Idea #1.unity
     guid: c565d0176913e2f4d8cd46b7c68683f2
+  - enabled: 1
+    path: Assets/Scenes/MainScene.unity
+    guid: 5ecc7cb6e2b39f849819730c8da90e18
   m_configObjects: {}
