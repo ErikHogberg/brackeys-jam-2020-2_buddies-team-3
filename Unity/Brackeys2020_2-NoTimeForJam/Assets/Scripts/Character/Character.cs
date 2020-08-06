@@ -52,12 +52,16 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public InputActionReference JumpBinding;
 	public InputActionReference ResetBinding;
 
+	[Space]
+	public SpriteRenderer FinishSprite;
+	public SpriteRenderer ActiveSprite;
+
 	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
 	bool moving => Mathf.Abs(xDir) > 0;
 	bool recording => RecordInput && active;
 
 	Rigidbody2D rb;
-	SpriteRenderer[] spriteRenderers;
+	List<SpriteRenderer> spriteRenderers;
 
 	float xDir = 0f;
 	Vector3 initPos;
@@ -65,16 +69,40 @@ public class Character : MonoBehaviour, IComparable<Character>
 	float groundTimer = 0f;
 	bool jumpAllowed = true;
 
+	bool _finished = false;
+	bool finished
+	{
+		get
+		{
+			return _finished;
+		}
+		set
+		{
+			FinishSprite?.gameObject.SetActive(value);
+			_finished = value;
+		}
+	}
+
+	public static bool AllFinished => instances.All(i => i.finished);
+	public static bool AllPrevFinished => instances.All(i => i.CharacterNumber >= CurrentCharacterIndex || i.finished);
+
 	float timer = 0f;
 
 	Queue<InputHistoryEntry> inputHistory = new Queue<InputHistoryEntry>();
 	InputHistoryEntry nextEntry;
 
+	private void Awake()
+	{
+		instances.Add(this);
+		instances.Sort();
+	}
+
 	// Start is called before the first frame update
 	void Start()
 	{
 		rb = GetComponent<Rigidbody2D>();
-		spriteRenderers = GetComponentsInChildren<SpriteRenderer>();
+		spriteRenderers = GetComponentsInChildren<SpriteRenderer>().ToList();
+		spriteRenderers.Add(FinishSprite);
 
 		LeftBinding.action.started += PressLeft;
 		RightBinding.action.started += PressRight;
@@ -90,19 +118,26 @@ public class Character : MonoBehaviour, IComparable<Character>
 		JumpBinding.action.Enable();
 		ResetBinding.action.Enable();
 
+		initPos = transform.position;
+
+		UpdateActiveSprite();
 	}
 
 	private void OnEnable()
 	{
-		initPos = transform.position;
-
-		instances.Add(this);
-		instances.Sort();
+		UpdateActiveSprite();
+		FinishSprite?.gameObject.SetActive(finished);
 	}
 
 	private void OnDisable()
 	{
 		instances.Remove(this);
+	}
+
+	void UpdateActiveSprite()
+	{
+		// print("active sprite set to " + active);
+		ActiveSprite?.gameObject.SetActive(active);
 	}
 
 	public void Restart()
@@ -114,9 +149,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 		transform.rotation = Quaternion.identity;
 
 		xDir = 0;
+		finished = false;
+
+		UpdateActiveSprite();
 	}
 
-	public void ClearInputHistory(){
+	public void ClearInputHistory()
+	{
 		inputHistory.Clear();
 	}
 
@@ -129,6 +168,11 @@ public class Character : MonoBehaviour, IComparable<Character>
 		else
 		{
 			CurrentCharacterIndex = 0;
+		}
+
+		foreach (var item in instances)
+		{
+			item.UpdateActiveSprite();
 		}
 	}
 
@@ -364,10 +408,34 @@ public class Character : MonoBehaviour, IComparable<Character>
 			return;
 		}
 
-		if (active && other.CompareTag("Goal"))
+		if (other.CompareTag("Goal"))
 		{
-			RestartAll();
-			NextChar();
+			if (active)
+			{
+				finished = true;
+
+				if (AllFinished)
+				{
+					// TODO: win level
+				}
+				else if (AllPrevFinished)
+				{
+
+					RestartAll();
+					NextChar();
+				}
+				else
+				{
+					finished = false;
+				}
+
+			}
+			else
+			{
+				finished = true;
+
+			}
+
 			return;
 		}
 
@@ -390,6 +458,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		if (other.CompareTag("Goal"))
 		{
+			// finished = true;
 			return;
 		}
 
