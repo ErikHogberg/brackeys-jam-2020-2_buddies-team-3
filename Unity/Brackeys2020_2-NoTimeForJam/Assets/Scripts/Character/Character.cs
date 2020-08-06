@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -17,7 +18,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 		Jump
 	}
 
-	private struct InputHistoryEntry
+	private class InputHistoryEntry
 	{
 		public InputType input;
 		public float timeStamp;
@@ -67,7 +68,6 @@ public class Character : MonoBehaviour, IComparable<Character>
 	float timer = 0f;
 
 	Queue<InputHistoryEntry> inputHistory = new Queue<InputHistoryEntry>();
-	InputHistoryEntry currentEntry;
 	InputHistoryEntry nextEntry;
 
 	// Start is called before the first frame update
@@ -112,6 +112,12 @@ public class Character : MonoBehaviour, IComparable<Character>
 		rb.velocity = Vector2.zero;
 		rb.angularVelocity = 0f;
 		transform.rotation = Quaternion.identity;
+
+		xDir = 0;
+	}
+
+	public void ClearInputHistory(){
+		inputHistory.Clear();
 	}
 
 	public static void NextChar()
@@ -138,6 +144,10 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		RestartAll();
 		CurrentCharacterIndex = 0;
+		foreach (var character in instances)
+		{
+			character.ClearInputHistory();
+		}
 	}
 
 	void Record(InputType input)
@@ -149,18 +159,25 @@ public class Character : MonoBehaviour, IComparable<Character>
 				input = input,
 				timeStamp = timer
 			});
+			print("recorded input " + input + " for character " + CharacterNumber);
 		}
 	}
 
 	void PressLeft(CallbackContext c)
 	{
 		Record(InputType.PressLeft);
+		if (!active)
+			return;
+
 		xDir = -1;
 		// xDir = -c.ReadValue<float>();
 	}
 	void ReleaseLeft(CallbackContext c)
 	{
 		Record(InputType.ReleaseLeft);
+		if (!active)
+			return;
+
 		if (xDir < 0)
 			xDir = 0;
 	}
@@ -168,12 +185,18 @@ public class Character : MonoBehaviour, IComparable<Character>
 	void PressRight(CallbackContext c)
 	{
 		Record(InputType.PressRight);
+		if (!active)
+			return;
+
 		xDir = 1;
 		// xDir = c.ReadValue<float>();
 	}
 	void ReleaseRight(CallbackContext c)
 	{
 		Record(InputType.ReleaseRight);
+		if (!active)
+			return;
+
 		if (xDir > 0)
 			xDir = 0;
 	}
@@ -186,6 +209,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	void PressJump()
 	{
 		Record(InputType.Jump);
+
 		if (active)
 		{
 			if (touchingGround && jumpAllowed)
@@ -203,7 +227,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	void PressReset(CallbackContext c)
 	{
-
+		RestartToBeginning();
 	}
 
 	void Move(float dt)
@@ -241,24 +265,58 @@ public class Character : MonoBehaviour, IComparable<Character>
 		}
 	}
 
+	void PlayRecording()
+	{
+		if (!active && RecordInput)
+		{
+			if (nextEntry == null)
+			{
+				if (inputHistory.Count < 1)
+					return;
+
+				nextEntry = inputHistory.Dequeue();
+			}
+
+			if (nextEntry.timeStamp < timer)
+			{
+				switch (nextEntry.input)
+				{
+					case InputType.PressLeft:
+						xDir = -1;
+						break;
+					case InputType.ReleaseLeft:
+						if (xDir < 0)
+							xDir = 0;
+
+						break;
+					case InputType.PressRight:
+						xDir = 1;
+						break;
+					case InputType.ReleaseRight:
+						if (xDir > 0)
+							xDir = 0;
+						break;
+					case InputType.Jump:
+						if (touchingGround && jumpAllowed)
+						{
+							var rotation = Quaternion.Euler(0f, 0f, -xDir * JumpSteeringMax);
+							rb.AddForce(rotation * Vector3.up * JumpForce, ForceMode2D.Impulse);
+							jumpAllowed = false;
+						}
+						break;
+				}
+				nextEntry = null;
+			}
+		}
+
+	}
+
 	// Update is called once per frame
 	void FixedUpdate()
 	{
 		timer += Time.deltaTime;
 
-		if (!active)
-		{
-			// if (RecordInput)
-			// {
-			// TODO: disable input
-
-			// }
-			// else
-			{
-
-				return;
-			}
-		}
+		PlayRecording();
 
 		if (groundTimer < CoyoteTime)
 		{
@@ -304,7 +362,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 			return;
 		}
 
-		if (other.CompareTag("Goal"))
+		if (active && other.CompareTag("Goal"))
 		{
 			RestartAll();
 			NextChar();

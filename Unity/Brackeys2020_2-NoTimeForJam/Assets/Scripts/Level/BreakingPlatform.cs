@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class BreakingPlatform : Triggerable
 {
-	private void OnCollisionExit2D(Collision2D other)
+	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag("Player"))
+		if (other.CompareTag("GroundDetection"))
 		{
 			gameObject.SetActive(false);
 		}

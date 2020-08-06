@@ -8,6 +8,7 @@ TagManager:
   - Spike
   - Box
   - StopBounce
+  - GroundDetection
   layers:
   - Default
   - TransparentFX
