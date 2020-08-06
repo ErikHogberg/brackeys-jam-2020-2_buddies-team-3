@@ -168,19 +168,20 @@ public class MovingPlatform : Triggerable, IResettable
 		}
 	}
 
-	// private void OnCollisionEnter2D(Collision2D other) {
-	//     if (other.gameObject.CompareTag("Player"))
-	//     {
-	//         other.transform.parent = transform;
-	//     }
-	// }
+	// rb
+	private void OnCollisionEnter2D(Collision2D other) {
+	    if (other.gameObject.CompareTag("Player"))
+	    {
+	        // other.transform.parent = transform;
+	    }
+	}
 
-	// private void OnCollisionExit2D(Collision2D other) {
-	//     if (other.gameObject.CompareTag("Player"))
-	//     {
-	//         other.transform.parent = transform.parent;
-	//     }
-	// }
+	private void OnCollisionExit2D(Collision2D other) {
+	    if (other.gameObject.CompareTag("Player"))
+	    {
+	        // other.transform.parent = transform.parent;
+	    }
+	}
 
 	public void ResetToInit()
 	{

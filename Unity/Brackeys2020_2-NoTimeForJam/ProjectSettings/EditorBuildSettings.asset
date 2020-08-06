@@ -17,4 +17,41 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: 5ecc7cb6e2b39f849819730c8da90e18
+  - enabled: 1
+    path: Assets/Scenes/cannon test.unity
+    guid: 8237800662e3c4c449aca0d5f5a88922
+  - enabled: 1
+    path: Assets/Scenes/level idea erik 1.unity
+    guid: 04b6f2f563382ba43be60d2c05bb408f
+  - enabled: 1
+    path: Assets/Scenes/level_1.unity
+    guid: 14a110ea2af55624b942a6f3803dc2df
+  - enabled: 1
+    path: Assets/Scenes/level_2.unity
+    guid: b826170314a26b84db6126f22c0ad053
+  - enabled: 1
+    path: Assets/Scenes/level_4.unity
+    guid: 5e5a9fa138849ee43b8f4e0498e64594
+  - enabled: 1
+    path: Assets/Scenes/thread the needle.unity
+    guid: 6242ba2cd65f8974593e6237df67e210
+  - enabled: 1
+    path: Assets/Scenes/warzone test.unity
+    guid: b21e64d7602d4324f844d748365b000c
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea (i dont even remember the numbers
+      anymore).unity
+    guid: f654f8b2ab7a8594aa4497aca4f4f85b
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 2.unity
+    guid: 92ff2c681223c3044bdea60514dacc96
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 3.unity
+    guid: 2bce1e7174559f5489dc7ef413ea788d
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 4.unity
+    guid: 8e89069a8fe6746408e44699e5c4e7a0
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 5.unity
+    guid: 8d3ae16879e2a9a46a5d6528366635ee
   m_configObjects: {}

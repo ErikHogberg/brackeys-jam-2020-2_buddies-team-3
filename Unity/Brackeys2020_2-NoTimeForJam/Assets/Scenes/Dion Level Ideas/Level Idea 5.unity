@@ -321,6 +321,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 715629096}
@@ -576,6 +577,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1740216444}
@@ -935,6 +937,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 844746858}
@@ -1146,6 +1149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1487638465}
@@ -1275,6 +1279,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 431108524}
@@ -1486,6 +1491,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 751328965}
@@ -1672,6 +1678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1289348485}
@@ -1883,6 +1890,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 568475939}
@@ -2094,6 +2102,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1441284302}
@@ -2223,6 +2232,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 68282312}
@@ -2655,6 +2665,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 970783833}
@@ -2784,6 +2795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1582843378}
@@ -3306,6 +3318,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 355346131}
@@ -3582,6 +3595,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 495637461}
@@ -3776,6 +3790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 2034024772}
@@ -4011,6 +4026,103 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e49b473fb5cc2e84c9e5b8ecd8021ac2, type: 3}
+--- !u!1001 &1276010195
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_RootOrder
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6330002500023239559, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_Name
+      value: Level Canvas
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
 --- !u!1001 &1276399900
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4269,6 +4381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1304815825}
@@ -4398,6 +4511,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1641219200}
@@ -4691,6 +4805,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 876795407}
@@ -5364,6 +5479,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1075309133}
@@ -5493,6 +5609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1469197218}
@@ -5765,6 +5882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 1227796955}
@@ -6183,6 +6301,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 621515554}
@@ -6312,6 +6431,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 976062708}
@@ -6422,6 +6542,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 2
   Targets:
   - {fileID: 5953769292127392374}
@@ -6633,6 +6754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   StartOnInit: 0
   Loop: 0
+  LoopToBeginning: 0
   Speed: 100
   Targets:
   - {fileID: 8261386317966767041}
