@@ -2,8 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreakingPlatform : Triggerable
+public class BreakingPlatform : Triggerable, IResettable
 {
+
+	private void Awake() {
+		Globals.Resettables.Add(this);
+	}
+
+	private void OnDestroy() {
+		Globals.Resettables.Remove(this);
+	}
+
 	private void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.CompareTag("GroundDetection"))
@@ -19,5 +28,11 @@ public class BreakingPlatform : Triggerable
 	public override void Release()
 	{
 	}
+
+	public void ResetToInit()
+	{
+		gameObject.SetActive(true);
+	}
+
 
 }
