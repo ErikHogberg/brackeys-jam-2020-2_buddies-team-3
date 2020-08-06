@@ -51,6 +51,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public InputActionReference RightBinding;
 	public InputActionReference JumpBinding;
 	public InputActionReference ResetBinding;
+	public InputActionReference NextBinding;
 
 	[Space]
 	public SpriteRenderer FinishSprite;
@@ -108,6 +109,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 		RightBinding.action.started += PressRight;
 		JumpBinding.action.started += PressJump;
 		ResetBinding.action.started += PressReset;
+		NextBinding.action.started += PressNext;
 
 		LeftBinding.action.canceled += ReleaseLeft;
 		RightBinding.action.canceled += ReleaseRight;
@@ -117,6 +119,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 		RightBinding.action.Enable();
 		JumpBinding.action.Enable();
 		ResetBinding.action.Enable();
+		NextBinding.action.Enable();
 
 		initPos = transform.position;
 
@@ -174,6 +177,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		{
 			item.UpdateActiveSprite();
 		}
+
+		instances[CurrentCharacterIndex].ClearInputHistory();
 	}
 
 	public void RestartAll()
@@ -272,7 +277,19 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	void PressReset(CallbackContext c)
 	{
-		RestartToBeginning();
+		if (active)
+		{
+			RestartToBeginning();
+		}
+	}
+
+	void PressNext(CallbackContext c)
+	{
+		if (active)
+		{
+			RestartAll();
+			NextChar();
+		}
 	}
 
 	void Move(float dt)

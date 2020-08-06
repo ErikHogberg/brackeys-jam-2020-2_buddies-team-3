@@ -380,6 +380,7 @@ MonoBehaviour:
   RightBinding: {fileID: 1088759194569340860, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   JumpBinding: {fileID: -6326988159615463495, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   ResetBinding: {fileID: 889484837402263846, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
+  NextBinding: {fileID: 4000683171137172178, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   FinishSprite: {fileID: 4915643561531749252}
   ActiveSprite: {fileID: 2880053140094517200}
 --- !u!212 &751042837181758630
