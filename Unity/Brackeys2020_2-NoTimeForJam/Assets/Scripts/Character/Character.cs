@@ -138,6 +138,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 		{
 			character.Restart();
 		}
+		Globals.Reset();
 	}
 
 	public void RestartToBeginning()
@@ -159,7 +160,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 				input = input,
 				timeStamp = timer
 			});
-			print("recorded input " + input + " for character " + CharacterNumber);
+			// print("recorded input " + input + " for character " + CharacterNumber);
 		}
 	}
 
@@ -358,7 +359,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		if (other.CompareTag("Spike"))
 		{
-			RestartAll();
+			RestartToBeginning();
+			// RestartAll();
 			return;
 		}
 

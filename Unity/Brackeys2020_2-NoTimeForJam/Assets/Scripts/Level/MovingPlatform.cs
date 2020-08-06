@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingPlatform : Triggerable
+public class MovingPlatform : Triggerable, IResettable
 {
 
 	public bool StartOnInit = false;
@@ -30,6 +30,16 @@ public class MovingPlatform : Triggerable
 		{
 			targetPositions.Add(item.position);
 		}
+	}
+
+	private void Awake()
+	{
+		Globals.Resettables.Add(this);
+	}
+
+	private void OnDestroy()
+	{
+		Globals.Resettables.Remove(this);
 	}
 
 	// Update is called once per frame
@@ -98,19 +108,19 @@ public class MovingPlatform : Triggerable
 		{
 			if (StartOnInit)
 			{
-                if (running && runningForward)
-                {
-                    currentTarget --;
-                }
+				if (running && runningForward)
+				{
+					currentTarget--;
+				}
 				running = true;
 				runningForward = false;
 			}
 			else
 			{
-                if (running && !runningForward)
-                {
-                    currentTarget ++;
-                }
+				if (running && !runningForward)
+				{
+					currentTarget++;
+				}
 				running = true;
 				runningForward = true;
 			}
@@ -127,19 +137,19 @@ public class MovingPlatform : Triggerable
 		{
 			if (!StartOnInit)
 			{
-                 if (running && runningForward)
-                {
-                    currentTarget --;
-                }
+				if (running && runningForward)
+				{
+					currentTarget--;
+				}
 				running = true;
 				runningForward = false;
 			}
 			else
 			{
-                 if (running && !runningForward)
-                {
-                    currentTarget ++;
-                }
+				if (running && !runningForward)
+				{
+					currentTarget++;
+				}
 				running = true;
 				runningForward = true;
 			}
@@ -150,18 +160,27 @@ public class MovingPlatform : Triggerable
 		}
 	}
 
-    // private void OnCollisionEnter2D(Collision2D other) {
-    //     if (other.gameObject.CompareTag("Player"))
-    //     {
-    //         other.transform.parent = transform;
-    //     }
-    // }
+	// private void OnCollisionEnter2D(Collision2D other) {
+	//     if (other.gameObject.CompareTag("Player"))
+	//     {
+	//         other.transform.parent = transform;
+	//     }
+	// }
 
-    // private void OnCollisionExit2D(Collision2D other) {
-    //     if (other.gameObject.CompareTag("Player"))
-    //     {
-    //         other.transform.parent = transform.parent;
-    //     }
-    // }
+	// private void OnCollisionExit2D(Collision2D other) {
+	//     if (other.gameObject.CompareTag("Player"))
+	//     {
+	//         other.transform.parent = transform.parent;
+	//     }
+	// }
+
+	public void ResetToInit()
+	{
+		transform.position = targetPositions[0];
+		running = StartOnInit;
+		runningForward = true;
+		currentTarget = 1;
+
+	}
 
 }

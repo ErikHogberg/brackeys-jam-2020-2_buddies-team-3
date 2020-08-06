@@ -8,7 +8,7 @@ public abstract class Triggerable : MonoBehaviour
 	public abstract void Release();
 }
 
-public class Button : MonoBehaviour
+public class Button : MonoBehaviour, IResettable
 {
 
 	public bool TriggerOnce = false;
@@ -29,10 +29,22 @@ public class Button : MonoBehaviour
 		initColor = spriteRenderer.color;
 	}
 
+	private void Awake() {
+		Globals.Resettables.Add(this);
+	}
+
+	private void OnDestroy() {
+		Globals.Resettables.Remove(this);
+	}
+
 	private void OnTriggerEnter2D(Collider2D other)
 	{
+
 		if (other.CompareTag("Player") || other.CompareTag("Box"))
 		{
+			if (objectPressing < 0)
+				objectPressing = 0;
+
 			if (objectPressing < 1)
 			{
 				spriteRenderer.color = PressColor;
@@ -57,10 +69,20 @@ public class Button : MonoBehaviour
 				spriteRenderer.color = initColor;
 				foreach (var item in ThingsToTrigger)
 				{
-					item.Release();
+					item?.Release();
 				}
 			}
+
+			if (objectPressing < 0)
+				objectPressing = 0;
 		}
+	}
+
+	public void ResetToInit()
+	{
+		spriteRenderer.color = initColor;
+		objectPressing = 0;
+
 	}
 
 }

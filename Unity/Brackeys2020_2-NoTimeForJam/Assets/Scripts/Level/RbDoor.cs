@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : Triggerable, IResettable
+[RequireComponent(typeof(Rigidbody2D))]
+public class RbDoor : Triggerable, IResettable
 {
 
 	public float Speed = 100f;
@@ -15,12 +16,16 @@ public class Door : Triggerable, IResettable
 	bool running = false;
 	bool runningForward = true;
 
+	Rigidbody2D rb;
+
 
 	// Start is called before the first frame update
 	void Start()
 	{
 		targetPos = Target.position;
 		initPos = transform.position;
+
+		rb = GetComponent<Rigidbody2D>();
 	}
 
 	private void Awake()
@@ -43,7 +48,11 @@ public class Door : Triggerable, IResettable
 
 		if (runningForward)
 		{
-			transform.position = Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime);
+			rb.MovePosition(
+			// transform.position = 
+			Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime)
+			);
+
 			if (transform.position == targetPos)
 			{
 				running = false;
@@ -51,7 +60,10 @@ public class Door : Triggerable, IResettable
 		}
 		else
 		{
-			transform.position = Vector3.MoveTowards(transform.position, initPos, Speed * Time.deltaTime);
+			rb.MovePosition(
+			// transform.position = 
+			Vector3.MoveTowards(transform.position, initPos, Speed * Time.deltaTime)
+			);
 			if (transform.position == initPos)
 			{
 				running = false;
@@ -72,7 +84,7 @@ public class Door : Triggerable, IResettable
 
 	public void ResetToInit()
 	{
-		transform.position = initPos;
+		rb.MovePosition(initPos);
 		running = false;
 		runningForward = true;
 
