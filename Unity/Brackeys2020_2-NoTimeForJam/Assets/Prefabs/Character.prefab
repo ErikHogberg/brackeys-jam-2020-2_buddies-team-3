@@ -137,7 +137,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -173,7 +173,7 @@ Transform:
   m_LocalScale: {x: 0.30643132, y: 0.30643132, z: 0.61286265}
   m_Children: []
   m_Father: {fileID: 3795303346852734517}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 43.343}
 --- !u!212 &2880053140094517200
 SpriteRenderer:
@@ -358,8 +358,8 @@ Transform:
   - {fileID: 6431438710964211564}
   - {fileID: 1834646815857754995}
   - {fileID: 137945586182542274}
-  - {fileID: 2393054853949639557}
   - {fileID: 2166092943697595279}
+  - {fileID: 2393054853949639557}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -687,7 +687,7 @@ Transform:
   m_LocalScale: {x: 0.38720536, y: 0.32324463, z: 1}
   m_Children: []
   m_Father: {fileID: 3795303346852734517}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8529677807034811455
 SpriteRenderer:
@@ -792,7 +792,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
