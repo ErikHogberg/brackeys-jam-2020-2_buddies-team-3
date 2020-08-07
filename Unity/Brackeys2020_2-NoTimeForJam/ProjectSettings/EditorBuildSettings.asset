@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/Scenes/speedtest.unity
     guid: 4c31618940657fd4a9d8dc12237280e6
   - enabled: 1
-    path: Assets/Scenes/Dion Level Ideas/Platform Level Idea #1.unity
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 1.unity
     guid: c565d0176913e2f4d8cd46b7c68683f2
   - enabled: 1
     path: Assets/Scenes/MainScene.unity
