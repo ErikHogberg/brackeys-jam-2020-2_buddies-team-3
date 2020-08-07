@@ -22,6 +22,8 @@ public class Button : Triggerable, IResettable
 
 	private SpriteRenderer spriteRenderer;
 
+	bool isPressed = false;
+
 	// Start is called before the first frame update
 	void Start()
 	{
@@ -42,6 +44,11 @@ public class Button : Triggerable, IResettable
 	private void OnTriggerEnter2D(Collider2D other)
 	{
 
+		if (TriggerOnce && isPressed)
+		{
+			return;
+		}
+
 		if (other.CompareTag("Player") || other.CompareTag("Box"))
 		{
 			if (objectPressing < 0)
@@ -49,6 +56,10 @@ public class Button : Triggerable, IResettable
 
 			if (objectPressing < 1)
 			{
+				if (TriggerOnce)
+				{
+					isPressed = true;
+				}
 				spriteRenderer.color = PressColor;
 				foreach (var item in ThingsToTrigger)
 				{
@@ -84,6 +95,7 @@ public class Button : Triggerable, IResettable
 	{
 		if (TriggerOnce)
 		{
+			isPressed = false;
 			spriteRenderer.color = initColor;
 			foreach (var item in ThingsToTrigger)
 			{

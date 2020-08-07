@@ -18,7 +18,6 @@ public class MovingPlatform : Triggerable, IResettable
 	public Transform[] Targets;
 	List<Vector3> targetPositions = new List<Vector3>();
 
-	// private Vector3 initPos;
 	Rigidbody2D rb;
 
 	bool running = false;
@@ -29,7 +28,6 @@ public class MovingPlatform : Triggerable, IResettable
 	{
 		rb = GetComponent<Rigidbody2D>();
 
-		// initPos = transform.position;
 		running = StartOnInit;
 
 		targetPositions.Add(transform.position);

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 137945586182542274}
   - component: {fileID: 4216366290898750794}
   - component: {fileID: 3634090300955333651}
-  - component: {fileID: 8705942930104771445}
+  - component: {fileID: 6368867291078233833}
   m_Layer: 0
   m_Name: Ground Detection Trigger
   m_TagString: GroundDetection
@@ -27,8 +27,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 920154392372894206}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.6, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 0.0393, y: -0.6589, z: 0}
+  m_LocalScale: {x: 0.9330993, y: 0.32324463, z: 1}
   m_Children: []
   m_Father: {fileID: 3795303346852734517}
   m_RootOrder: 3
@@ -99,8 +99,8 @@ MonoBehaviour:
   FollowTarget: {fileID: 6431438711301988372}
   Buffer: {x: 0, y: 0}
   UseOffset: 1
---- !u!58 &8705942930104771445
-CircleCollider2D:
+--- !u!61 &6368867291078233833
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -112,9 +112,19 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.00000011920929}
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &6251026976123155521
 GameObject:
   m_ObjectHideFlags: 0
