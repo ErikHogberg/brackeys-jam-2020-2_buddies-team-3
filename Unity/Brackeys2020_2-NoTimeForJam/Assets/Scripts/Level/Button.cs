@@ -110,6 +110,7 @@ public class Button : Triggerable, IResettable
 
 	public void ResetToInit()
 	{
+		isPressed = false;
 		spriteRenderer.color = initColor;
 		objectPressing = 0;
 
