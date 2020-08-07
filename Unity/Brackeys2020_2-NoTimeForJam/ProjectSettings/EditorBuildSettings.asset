@@ -39,10 +39,6 @@ EditorBuildSettings:
     path: Assets/Scenes/warzone test.unity
     guid: b21e64d7602d4324f844d748365b000c
   - enabled: 1
-    path: Assets/Scenes/Dion Level Ideas/Level Idea (i dont even remember the numbers
-      anymore).unity
-    guid: f654f8b2ab7a8594aa4497aca4f4f85b
-  - enabled: 1
     path: Assets/Scenes/Dion Level Ideas/Level Idea 2.unity
     guid: 92ff2c681223c3044bdea60514dacc96
   - enabled: 1
