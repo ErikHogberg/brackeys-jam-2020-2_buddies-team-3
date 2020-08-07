@@ -183,7 +183,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		}
 		else
 		{
-			CurrentCharacterIndex = 0;
+			// CurrentCharacterIndex = 0;
+			return;
 		}
 
 		foreach (var item in instances)
