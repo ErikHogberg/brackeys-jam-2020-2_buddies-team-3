@@ -20,8 +20,15 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	private class InputHistoryEntry
 	{
-		public InputType input;
-		public float timeStamp;
+		public InputType Input;
+		public float TimeStamp;
+	}
+
+	private class TransformHistoryEntry
+	{
+		public Vector2 Pos;
+		public float Rot;
+		public float TimeStamp;
 	}
 
 	public static int CurrentCharacterIndex = 0;
@@ -91,6 +98,11 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	Queue<InputHistoryEntry> inputHistory = new Queue<InputHistoryEntry>();
 	InputHistoryEntry nextEntry;
+
+	Stack<TransformHistoryEntry> transformHistory = new Stack<TransformHistoryEntry>();
+	TransformHistoryEntry nextTransformEntry;
+	bool rewinding = false;
+
 
 	private void Awake()
 	{
@@ -192,6 +204,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	public void RestartToBeginning()
 	{
+		// IDEA: reload scene instead?
+
 		RestartAll();
 		CurrentCharacterIndex = 0;
 		foreach (var character in instances)
@@ -206,8 +220,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		{
 			inputHistory.Enqueue(new InputHistoryEntry
 			{
-				input = input,
-				timeStamp = timer
+				Input = input,
+				TimeStamp = timer
 			});
 			// print("recorded input " + input + " for character " + CharacterNumber);
 		}
@@ -339,9 +353,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 				nextEntry = inputHistory.Dequeue();
 			}
 
-			if (nextEntry.timeStamp < timer)
+			if (nextEntry.TimeStamp < timer)
 			{
-				switch (nextEntry.input)
+				switch (nextEntry.Input)
 				{
 					case InputType.PressLeft:
 						xDir = -1;
@@ -376,6 +390,34 @@ public class Character : MonoBehaviour, IComparable<Character>
 	// Update is called once per frame
 	void FixedUpdate()
 	{
+		if (rewinding)
+		{
+			timer -= Time.deltaTime;
+			if (timer < 0)
+			{
+				rewinding = false;
+				// TODO: call reset?
+				return;
+			}
+
+			if (nextTransformEntry == null)
+			{
+				if (transformHistory.Count < 1)
+				{
+					return;
+				}
+				nextTransformEntry = transformHistory.Pop();
+			}
+
+			if (nextTransformEntry.TimeStamp > timer)
+			{
+				rb.MovePosition(nextTransformEntry.Pos);
+				rb.MoveRotation(nextTransformEntry.Rot);
+				nextTransformEntry = null;
+			}
+			
+		}
+
 		timer += Time.deltaTime;
 
 		PlayRecording();
@@ -434,14 +476,16 @@ public class Character : MonoBehaviour, IComparable<Character>
 				if (AllFinished)
 				{
 					string sceneName = SceneManager.GetActiveScene().name;
-					print("finished level " + sceneName +"!");
+					print("finished level " + sceneName + "!");
 					if (LevelButtonUIScript.LevelProgress.ContainsKey(sceneName))
 					{
 						LevelButtonUIScript.LevelProgress[sceneName] = true;
-					} else{
+					}
+					else
+					{
 						LevelButtonUIScript.LevelProgress.Add(sceneName, true);
 					}
-						SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+					SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
 				}
 				else if (AllPrevFinished)
 				{
@@ -499,6 +543,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	private void OnCollisionEnter2D(Collision2D other)
 	{
+		if (other.gameObject.CompareTag("Spike"))
+		{
+			RestartToBeginning();
+			// RestartAll();
+			return;
+		}
+
 		// if (other.gameObject.CompareTag("StopBounce"))
 		// 	rb.velocity = new Vector2(rb.velocity.x, 0);
 
