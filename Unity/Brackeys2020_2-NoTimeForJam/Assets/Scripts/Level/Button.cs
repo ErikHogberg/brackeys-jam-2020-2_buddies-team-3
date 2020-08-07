@@ -63,7 +63,7 @@ public class Button : Triggerable, IResettable
 				spriteRenderer.color = PressColor;
 				foreach (var item in ThingsToTrigger)
 				{
-					item.Press();
+					item?.Press();
 				}
 			}
 

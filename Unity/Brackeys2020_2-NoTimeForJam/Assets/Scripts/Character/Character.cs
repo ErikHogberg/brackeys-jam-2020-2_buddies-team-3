@@ -15,7 +15,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		ReleaseLeft,
 		PressRight,
 		ReleaseRight,
-		Jump
+		Jump,
+		PressDown
 	}
 
 	private class InputHistoryEntry
@@ -52,10 +53,14 @@ public class Character : MonoBehaviour, IComparable<Character>
 	[Space]
 	public bool RecordInput = true;
 	public float VelocityCap = 100f;
+	public bool RedirectVelocityOnDown = false;
+	[Range(0, 1)]
+	public float DownVelocityLossPercentage = .4f;
 
 	[Space]
 	public InputActionReference LeftBinding;
 	public InputActionReference RightBinding;
+	public InputActionReference DownBinding;
 	public InputActionReference JumpBinding;
 	public InputActionReference ResetBinding;
 	public InputActionReference NextBinding;
@@ -73,9 +78,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	float xDir = 0f;
 	Vector3 initPos;
-	bool touchingGround => groundTimer < CoyoteTime;
-	float groundTimer = 0f;
 	bool jumpAllowed = true;
+	bool touchingGround => groundTimer < CoyoteTime && jumpAllowed;
+	float groundTimer = 0f;
 
 	bool _finished = false;
 	bool finished
@@ -119,6 +124,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		LeftBinding.action.started += PressLeft;
 		RightBinding.action.started += PressRight;
+		DownBinding.action.started += PressDown;
 		JumpBinding.action.started += PressJump;
 		ResetBinding.action.started += PressReset;
 		NextBinding.action.started += PressNext;
@@ -129,6 +135,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		LeftBinding.action.Enable();
 		RightBinding.action.Enable();
+		DownBinding.action.Enable();
 		JumpBinding.action.Enable();
 		ResetBinding.action.Enable();
 		NextBinding.action.Enable();
@@ -267,6 +274,29 @@ public class Character : MonoBehaviour, IComparable<Character>
 			xDir = 0;
 	}
 
+	void PressDown(CallbackContext c)
+	{
+		PressDown();
+	}
+
+	void PressDown()
+	{
+		Record(InputType.PressDown);
+
+		if (active && touchingGround)
+		{
+			if (RedirectVelocityOnDown)
+			{
+				rb.velocity = new Vector2(0, rb.velocity.y * (1f - DownVelocityLossPercentage));
+			}
+			else
+			{
+				rb.velocity = Vector2.down * rb.velocity.magnitude * (1f - DownVelocityLossPercentage);
+			}
+		}
+
+	}
+
 	void PressJump(CallbackContext c)
 	{
 		PressJump();
@@ -382,6 +412,19 @@ public class Character : MonoBehaviour, IComparable<Character>
 							jumpAllowed = false;
 						}
 						break;
+					case InputType.PressDown:
+						if (touchingGround)
+						{
+							if (RedirectVelocityOnDown)
+							{
+								rb.velocity = new Vector2(0, rb.velocity.y * (1f - DownVelocityLossPercentage));
+							}
+							else
+							{
+								rb.velocity = Vector2.down * rb.velocity.magnitude * (1f - DownVelocityLossPercentage);
+							}
+						}
+						break;
 				}
 				nextEntry = null;
 			}
@@ -417,7 +460,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 				rb.MoveRotation(nextTransformEntry.Rot);
 				nextTransformEntry = null;
 			}
-			
+
 		}
 
 		timer += Time.deltaTime;

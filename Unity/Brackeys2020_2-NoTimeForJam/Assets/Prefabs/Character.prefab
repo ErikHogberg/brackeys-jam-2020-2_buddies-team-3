@@ -406,8 +406,11 @@ MonoBehaviour:
   CoyoteTime: 0.3
   RecordInput: 1
   VelocityCap: 13
+  RedirectVelocityOnDown: 1
+  DownVelocityLossPercentage: 0.4
   LeftBinding: {fileID: -5975315916042150918, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   RightBinding: {fileID: 1088759194569340860, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
+  DownBinding: {fileID: 1790297053221180733, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   JumpBinding: {fileID: -6326988159615463495, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   ResetBinding: {fileID: 889484837402263846, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
   NextBinding: {fileID: 4000683171137172178, guid: b2bfb13c6a2001041ae500a0d781789d, type: 3}
