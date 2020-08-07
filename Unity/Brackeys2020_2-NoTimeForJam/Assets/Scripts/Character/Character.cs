@@ -135,6 +135,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		initPos = transform.position;
 
+		CurrentCharacterIndex = 0;
 		UpdateActiveSprite();
 	}
 
