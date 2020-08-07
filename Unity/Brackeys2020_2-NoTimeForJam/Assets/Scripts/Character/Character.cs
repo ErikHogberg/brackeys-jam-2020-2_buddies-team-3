@@ -302,8 +302,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		if (active)
 		{
-			RestartAll();
 			NextChar();
+			RestartAll();
 		}
 	}
 
@@ -477,7 +477,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 				if (AllFinished)
 				{
 					// CurrentCharacterIndex = 0;
-					RestartToBeginning();
+					// RestartToBeginning();
 					string sceneName = SceneManager.GetActiveScene().name;
 					print("finished level " + sceneName + "!");
 					if (LevelButtonUIScript.LevelProgress.ContainsKey(sceneName))
