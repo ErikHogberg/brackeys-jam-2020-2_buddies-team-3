@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Linq;
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class MovingPlatform : Triggerable, IResettable
 {
 
@@ -16,6 +19,7 @@ public class MovingPlatform : Triggerable, IResettable
 	List<Vector3> targetPositions = new List<Vector3>();
 
 	// private Vector3 initPos;
+	Rigidbody2D rb;
 
 	bool running = false;
 	bool runningForward = true;
@@ -23,6 +27,8 @@ public class MovingPlatform : Triggerable, IResettable
 	// Start is called before the first frame update
 	void Start()
 	{
+		rb = GetComponent<Rigidbody2D>();
+
 		// initPos = transform.position;
 		running = StartOnInit;
 
@@ -44,7 +50,7 @@ public class MovingPlatform : Triggerable, IResettable
 	}
 
 	// Update is called once per frame
-	void Update()
+	void FixedUpdate()
 	{
 		if (!running)
 		{
@@ -57,11 +63,21 @@ public class MovingPlatform : Triggerable, IResettable
 			return;
 		}
 
+		float oldX = transform.position.x;
+
 		Vector3 targetPos = targetPositions[currentTarget];
 		if (runningForward)
 		{
 
-			transform.position = Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime);
+			if (rb)
+			{
+				rb.MovePosition(Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime));
+			}
+			else
+			{
+				transform.position = Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime);
+			}
+
 			if (transform.position == targetPos)
 			{
 				currentTarget++;
@@ -88,7 +104,16 @@ public class MovingPlatform : Triggerable, IResettable
 		}
 		else
 		{
-			transform.position = Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime);
+
+			if (rb)
+			{
+				rb.MovePosition(Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime));
+			}
+			else
+			{
+				transform.position = Vector3.MoveTowards(transform.position, targetPos, Speed * Time.deltaTime);
+			}
+
 			if (transform.position == targetPos)
 			{
 				currentTarget--;
@@ -106,7 +131,6 @@ public class MovingPlatform : Triggerable, IResettable
 				}
 			}
 		}
-
 
 	}
 
@@ -168,28 +192,12 @@ public class MovingPlatform : Triggerable, IResettable
 		}
 	}
 
-	// rb
-	private void OnCollisionEnter2D(Collision2D other) {
-	    if (other.gameObject.CompareTag("Player"))
-	    {
-	        // other.transform.parent = transform;
-	    }
-	}
-
-	private void OnCollisionExit2D(Collision2D other) {
-	    if (other.gameObject.CompareTag("Player"))
-	    {
-	        // other.transform.parent = transform.parent;
-	    }
-	}
-
 	public void ResetToInit()
 	{
 		transform.position = targetPositions[0];
 		running = StartOnInit;
 		runningForward = true;
 		currentTarget = 1;
-
 	}
 
 }
