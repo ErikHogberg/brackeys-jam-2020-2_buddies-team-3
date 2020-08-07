@@ -15,7 +15,7 @@ public class MovingPlatform : Triggerable, IResettable
 	public float Speed = 100f;
 
 	private int currentTarget = 1;
-	public Transform[] Targets;
+	public List<Transform> Targets;
 	List<Vector3> targetPositions = new List<Vector3>();
 
 	Rigidbody2D rb;
@@ -26,6 +26,9 @@ public class MovingPlatform : Triggerable, IResettable
 	// Start is called before the first frame update
 	void Start()
 	{
+
+		Targets.RemoveAll(t => t == null);
+
 		rb = GetComponent<Rigidbody2D>();
 
 		running = StartOnInit;
