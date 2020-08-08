@@ -33,7 +33,7 @@ EditorBuildSettings:
     path: Assets/Scenes/level_4.unity
     guid: 5e5a9fa138849ee43b8f4e0498e64594
   - enabled: 1
-    path: Assets/Scenes/thread the needle.unity
+    path: Assets/Scenes/scrapped/thread the needle.unity
     guid: 6242ba2cd65f8974593e6237df67e210
   - enabled: 1
     path: Assets/Scenes/warzone test.unity
