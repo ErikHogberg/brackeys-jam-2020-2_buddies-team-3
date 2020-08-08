@@ -30,6 +30,13 @@ public class Character : MonoBehaviour, IComparable<Character>
 		public Vector2 Pos;
 		public float Rot;
 		public float TimeStamp;
+
+		public TransformHistoryEntry(Vector2 pos, float rot, float timeStamp)
+		{
+			Pos = pos;
+			Rot = rot;
+			TimeStamp = timeStamp;
+		}
 	}
 
 	public static int CurrentCharacterIndex = 0;
@@ -72,7 +79,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
 	bool moving => Mathf.Abs(xDir) > 0;
-	bool recording => RecordInput && active;
+	bool recording => RecordInput && active && !rewinding;
 
 	Rigidbody2D rb;
 	List<SpriteRenderer> spriteRenderers;
@@ -439,7 +446,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		if (rewinding)
 		{
-			timer -= Time.deltaTime*RewindSpeedPercentage;
+			timer -= Time.deltaTime * RewindSpeedPercentage;
 			if (timer < 0)
 			{
 				rewinding = false;
@@ -447,22 +454,31 @@ public class Character : MonoBehaviour, IComparable<Character>
 				return;
 			}
 
-			if (nextTransformEntry == null)
+			bool entriesAvailable = true;
+
+			while (entriesAvailable)
 			{
-				if (transformHistory.Count < 1)
+				entriesAvailable = false;
+
+				if (nextTransformEntry == null)
 				{
-					return;
+					if (transformHistory.Count < 1)
+					{
+						return;
+					}
+					nextTransformEntry = transformHistory.Pop();
 				}
-				nextTransformEntry = transformHistory.Pop();
+
+				if (nextTransformEntry.TimeStamp > timer)
+				{
+					rb.MovePosition(nextTransformEntry.Pos);
+					rb.MoveRotation(nextTransformEntry.Rot);
+					nextTransformEntry = null;
+					entriesAvailable = true;
+				}
 			}
 
-			if (nextTransformEntry.TimeStamp > timer)
-			{
-				rb.MovePosition(nextTransformEntry.Pos);
-				rb.MoveRotation(nextTransformEntry.Rot);
-				nextTransformEntry = null;
-			}
-
+			return;
 		}
 
 		timer += Time.deltaTime;
@@ -490,13 +506,10 @@ public class Character : MonoBehaviour, IComparable<Character>
 			}
 			rb.velocity = new Vector2(xVelocity, rb.velocity.y);
 
-			// if ((xDir > 0 && rb.velocity.x < 0) || (xDir < 0 && rb.velocity.x > 0))
-			// {
-			// 	rb.velocity= new Vector2(-rb.velocity.x, rb.velocity.y);
-			// }
-			// rb.velocity = rb.velocity.normalized * MinSpeed;
-			// print("hit velocity cap");
 		}
+
+		transformHistory.Push(new TransformHistoryEntry(rb.position, rb.rotation, timer));
+
 	}
 
 	public int CompareTo(Character other)
@@ -578,17 +591,20 @@ public class Character : MonoBehaviour, IComparable<Character>
 		{
 			// finished = true;
 
-			string sceneName = SceneManager.GetActiveScene().name;
-			print("finished level " + sceneName + "!");
-			if (LevelButtonUIScript.LevelProgress.ContainsKey(sceneName))
+			if (AllFinished)
 			{
-				LevelButtonUIScript.LevelProgress[sceneName] = true;
+				string sceneName = SceneManager.GetActiveScene().name;
+				print("finished level " + sceneName + "!");
+				if (LevelButtonUIScript.LevelProgress.ContainsKey(sceneName))
+				{
+					LevelButtonUIScript.LevelProgress[sceneName] = true;
+				}
+				else
+				{
+					LevelButtonUIScript.LevelProgress.Add(sceneName, true);
+				}
+				SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
 			}
-			else
-			{
-				LevelButtonUIScript.LevelProgress.Add(sceneName, true);
-			}
-			SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
 
 			return;
 		}
