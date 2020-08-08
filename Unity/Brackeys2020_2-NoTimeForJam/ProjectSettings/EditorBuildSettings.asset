@@ -50,4 +50,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Dion Level Ideas/Level Idea 5.unity
     guid: 8d3ae16879e2a9a46a5d6528366635ee
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 6.unity
+    guid: 8fe44f6108cd10845966b3619f782e99
+  - enabled: 1
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 7.unity
+    guid: fc45edf063a0f53499ca08ff23436fb1
   m_configObjects: {}
