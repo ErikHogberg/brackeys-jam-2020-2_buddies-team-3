@@ -195,7 +195,15 @@ public class MovingPlatform : Triggerable, IResettable
 
 	public void ResetToInit()
 	{
-		transform.position = targetPositions[0];
+		if (rb)
+		{
+			rb.MovePosition(targetPositions[0]);
+		}
+		else
+		{
+			transform.position = targetPositions[0];
+		}
+		
 		running = StartOnInit;
 		runningForward = true;
 		currentTarget = 1;
