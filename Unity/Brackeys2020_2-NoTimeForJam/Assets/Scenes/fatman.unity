@@ -1278,7 +1278,6 @@ MonoBehaviour:
   FollowTarget: {fileID: 253065233}
   Buffer: {x: 2, y: 1}
   UseOffset: 0
-  LockRotation: 0
 --- !u!1001 &1422709715
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1893,6 +1892,75 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 32474924750567385, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 319
+      objectReference: {fileID: 0}
+    - target: {fileID: 32474924750567385, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -236
+      objectReference: {fileID: 0}
+    - target: {fileID: 568166044331099291, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_text
+      value: This level includes a deep moral message about building bridges using
+        people. Its pretty tricky.
+      objectReference: {fileID: 0}
+    - target: {fileID: 568166044331099291, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_fontSize
+      value: 36.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534981347614601966, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_text
+      value: 'TODO:
+
+        1. make good gaem
+
+        2. Hire UI desinger '
+      objectReference: {fileID: 0}
+    - target: {fileID: 1534981347614601966, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_fontSize
+      value: 36.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2055276406728730756, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611930744545530792, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 412
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 782
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.04669986
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.998909
+      objectReference: {fileID: 0}
+    - target: {fileID: 6098191990321638227, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 5.353
+      objectReference: {fileID: 0}
+    - target: {fileID: 6271784915966983299, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6330002500023239555, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1980,6 +2048,10 @@ PrefabInstance:
     - target: {fileID: 6330002500023239559, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
       propertyPath: m_Name
       value: Level Canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 7110137415705165350, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e6707b51213e0c3479f8bc50b2526369, type: 3}

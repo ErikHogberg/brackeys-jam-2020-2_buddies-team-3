@@ -21,10 +21,10 @@ EditorBuildSettings:
     path: Assets/Scenes/Cannonwall.unity
     guid: 8237800662e3c4c449aca0d5f5a88922
   - enabled: 1
-    path: Assets/Scenes/level idea erik 1.unity
+    path: Assets/Scenes/scrapped/level idea erik 1.unity
     guid: 04b6f2f563382ba43be60d2c05bb408f
   - enabled: 1
-    path: Assets/Scenes/level_1.unity
+    path: Assets/Scenes/scrapped/level_1.unity
     guid: 14a110ea2af55624b942a6f3803dc2df
   - enabled: 1
     path: Assets/Scenes/Elevator level.unity
