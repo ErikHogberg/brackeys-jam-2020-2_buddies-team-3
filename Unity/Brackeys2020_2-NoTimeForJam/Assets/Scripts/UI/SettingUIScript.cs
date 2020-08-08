@@ -22,7 +22,7 @@ public class SettingUIScript : MonoBehaviour
 		hz = Screen.currentResolution.refreshRate;
 
 		List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
-
+		
 		foreach (var item in Screen.resolutions)
 		{
 			options.Add(new TMP_Dropdown.OptionData(

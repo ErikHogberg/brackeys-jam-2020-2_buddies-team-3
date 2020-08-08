@@ -567,14 +567,27 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	private void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.CompareTag("Spike"))
-		{
-			return;
-		}
+		// if (other.CompareTag("Spike"))
+		// {
+		// 	return;
+		// }
 
 		if (other.CompareTag("Goal"))
 		{
 			// finished = true;
+
+			string sceneName = SceneManager.GetActiveScene().name;
+			print("finished level " + sceneName + "!");
+			if (LevelButtonUIScript.LevelProgress.ContainsKey(sceneName))
+			{
+				LevelButtonUIScript.LevelProgress[sceneName] = true;
+			}
+			else
+			{
+				LevelButtonUIScript.LevelProgress.Add(sceneName, true);
+			}
+			SceneManager.LoadScene("MainMenuScene", LoadSceneMode.Single);
+
 			return;
 		}
 
