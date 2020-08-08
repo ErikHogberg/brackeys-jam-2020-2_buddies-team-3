@@ -35,7 +35,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/scrapped/thread the needle.unity
     guid: 6242ba2cd65f8974593e6237df67e210
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/warzone test.unity
     guid: b21e64d7602d4324f844d748365b000c
   - enabled: 1
@@ -59,4 +59,13 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/fatman.unity
     guid: b64be542c1542d24e88a440569c45e78
+  - enabled: 1
+    path: Assets/Scenes/level_2.unity
+    guid: a3b3af4220fc76143afae45fe48d8963
+  - enabled: 1
+    path: Assets/Scenes/tandem platforming.unity
+    guid: 279c5109c3cd4a6448329aac2e686305
+  - enabled: 1
+    path: Assets/Scenes/cannon test.unity
+    guid: 93928120fd5244644ba7fd7e7f3c05ea
   m_configObjects: {}
