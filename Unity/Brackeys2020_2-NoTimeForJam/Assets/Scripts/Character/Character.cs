@@ -52,6 +52,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public float CoyoteTime = .1f;
 	[Space]
 	public bool RecordInput = true;
+	public float RewindSpeedPercentage = 2f;
 	public float VelocityCap = 100f;
 	public bool RedirectVelocityOnDown = false;
 	[Range(0, 1)]
@@ -180,6 +181,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public void ClearInputHistory()
 	{
 		inputHistory.Clear();
+		nextEntry = null;
 	}
 
 	public static void NextChar()
@@ -437,7 +439,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		if (rewinding)
 		{
-			timer -= Time.deltaTime;
+			timer -= Time.deltaTime*RewindSpeedPercentage;
 			if (timer < 0)
 			{
 				rewinding = false;
