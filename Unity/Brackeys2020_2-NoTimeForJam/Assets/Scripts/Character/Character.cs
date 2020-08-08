@@ -77,7 +77,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public SpriteRenderer FinishSprite;
 	public SpriteRenderer ActiveSprite;
 
-	public bool active => CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
+	public bool active => !rewinding && CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex];
 	bool moving => Mathf.Abs(xDir) > 0;
 	bool recording => RecordInput && active && !rewinding;
 
@@ -114,7 +114,24 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	Stack<TransformHistoryEntry> transformHistory = new Stack<TransformHistoryEntry>();
 	TransformHistoryEntry nextTransformEntry;
-	bool rewinding = false;
+
+	bool _rewinding = false;
+	bool rewinding
+	{
+		get { return _rewinding; }
+		set
+		{
+			if (value)
+			{
+				UIRewindNotification.Show();
+			}
+			else
+			{
+				UIRewindNotification.Hide();
+			}
+			_rewinding = value;
+		}
+	}
 
 
 	private void Awake()
@@ -179,14 +196,28 @@ public class Character : MonoBehaviour, IComparable<Character>
 		rb.angularVelocity = 0f;
 		transform.rotation = Quaternion.identity;
 
+		ClearTransformHistory();
+
 		xDir = 0;
 		finished = false;
 
 		UpdateActiveSprite();
 	}
 
+	public void ClearTransformHistory()
+	{
+
+		rewinding = false;
+
+		transformHistory.Clear();
+		nextTransformEntry = null;
+	}
+
 	public void ClearInputHistory()
 	{
+
+		ClearTransformHistory();
+
 		inputHistory.Clear();
 		nextEntry = null;
 	}
@@ -226,6 +257,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		RestartAll();
 		CurrentCharacterIndex = 0;
+
+
+
 		foreach (var character in instances)
 		{
 			character.ClearInputHistory();
@@ -338,12 +372,21 @@ public class Character : MonoBehaviour, IComparable<Character>
 		}
 	}
 
+	public static void RewindAll()
+	{
+		foreach (var item in instances)
+		{
+			item.rewinding = true;
+		}
+	}
+
 	void PressNext(CallbackContext c)
 	{
 		if (active)
 		{
-			NextChar();
-			RestartAll();
+			RewindAll();
+			// RestartAll();
+			// NextChar();
 		}
 	}
 
@@ -451,6 +494,9 @@ public class Character : MonoBehaviour, IComparable<Character>
 			{
 				rewinding = false;
 				// TODO: call reset?
+				nextTransformEntry = null;
+				RestartAll();
+				NextChar();
 				return;
 			}
 
@@ -508,6 +554,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		}
 
+		// TODO: reduce rate of recording
 		transformHistory.Push(new TransformHistoryEntry(rb.position, rb.rotation, timer));
 
 	}
@@ -551,9 +598,10 @@ public class Character : MonoBehaviour, IComparable<Character>
 				}
 				else if (AllPrevFinished)
 				{
+					RewindAll();
 
-					RestartAll();
-					NextChar();
+					// RestartAll();
+					// NextChar();
 				}
 				else
 				{
