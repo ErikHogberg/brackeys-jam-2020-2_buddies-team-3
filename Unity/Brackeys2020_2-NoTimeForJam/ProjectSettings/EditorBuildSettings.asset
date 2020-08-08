@@ -48,12 +48,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Dion Level Ideas/Level Idea 4.unity
     guid: 8e89069a8fe6746408e44699e5c4e7a0
   - enabled: 1
-    path: Assets/Scenes/Dion Level Ideas/Level Idea 5.unity
+    path: Assets/Scenes/Dion Level Ideas/Scrapped Idea/Level Idea 5 (OLD).unity
     guid: 8d3ae16879e2a9a46a5d6528366635ee
   - enabled: 1
-    path: Assets/Scenes/Dion Level Ideas/Level Idea 6.unity
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 5.unity
     guid: 8fe44f6108cd10845966b3619f782e99
   - enabled: 1
-    path: Assets/Scenes/Dion Level Ideas/Level Idea 7.unity
+    path: Assets/Scenes/Dion Level Ideas/Level Idea 6.unity
     guid: fc45edf063a0f53499ca08ff23436fb1
+  - enabled: 1
+    path: Assets/Scenes/fatman.unity
+    guid: b64be542c1542d24e88a440569c45e78
   m_configObjects: {}
