@@ -495,7 +495,11 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		if (rewinding)
 		{
-			timer -= Time.deltaTime * RewindSpeedModifier * playTime;
+			float rewindSpeed = RewindSpeedModifier * playTime;
+			timer -= Time.deltaTime * rewindSpeed;
+			if (CurrentCharacterIndex < instances.Count && this == instances[CurrentCharacterIndex])
+				UITimer.SetTime(timer,true);
+
 			if (timer < 0)
 			{
 				rewinding = false;
@@ -534,6 +538,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 		}
 
 		timer += Time.deltaTime;
+		if (active)
+			UITimer.SetTime(timer, false);
 
 		PlayRecording();
 

@@ -10,7 +10,7 @@ public class FollowScript : MonoBehaviour
 	public Vector2 Buffer = Vector2.zero;
 
 	public bool UseOffset = false;
-	public bool LockRotation = false;
+	// public bool LockRotation = false;
 
 	Vector3 offset;
 
