@@ -405,6 +405,8 @@ MonoBehaviour:
   JumpSteeringMax: 15
   CoyoteTime: 0.3
   RecordInput: 1
+  RewindSpeedModifier: 0.5
+  RewindSkipRate: 0
   VelocityCap: 13
   RedirectVelocityOnDown: 1
   DownVelocityLossPercentage: 0.4

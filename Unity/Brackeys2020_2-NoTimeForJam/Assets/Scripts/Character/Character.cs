@@ -59,7 +59,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 	public float CoyoteTime = .1f;
 	[Space]
 	public bool RecordInput = true;
-	public float RewindSpeedPercentage = 2f;
+	public float RewindSpeedModifier = 2f;
+	public int RewindSkipRate = 0;
 	public float VelocityCap = 100f;
 	public bool RedirectVelocityOnDown = false;
 	[Range(0, 1)]
@@ -114,6 +115,8 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 	Stack<TransformHistoryEntry> transformHistory = new Stack<TransformHistoryEntry>();
 	TransformHistoryEntry nextTransformEntry;
+	float playTime = 1f;
+	int skippedRewindFrames = 0;
 
 	bool _rewinding = false;
 	bool rewinding
@@ -123,10 +126,12 @@ public class Character : MonoBehaviour, IComparable<Character>
 		{
 			if (value)
 			{
+				rb.bodyType = RigidbodyType2D.Kinematic;
 				UIRewindNotification.Show();
 			}
 			else
 			{
+				rb.bodyType = RigidbodyType2D.Dynamic;
 				UIRewindNotification.Hide();
 			}
 			_rewinding = value;
@@ -208,6 +213,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 
 		rewinding = false;
+		skippedRewindFrames = 0;
 
 		transformHistory.Clear();
 		nextTransformEntry = null;
@@ -489,7 +495,7 @@ public class Character : MonoBehaviour, IComparable<Character>
 	{
 		if (rewinding)
 		{
-			timer -= Time.deltaTime * RewindSpeedPercentage;
+			timer -= Time.deltaTime * RewindSpeedModifier * playTime;
 			if (timer < 0)
 			{
 				rewinding = false;
@@ -554,9 +560,16 @@ public class Character : MonoBehaviour, IComparable<Character>
 
 		}
 
-		// TODO: reduce rate of recording
-		transformHistory.Push(new TransformHistoryEntry(rb.position, rb.rotation, timer));
-
+		if (skippedRewindFrames >= RewindSkipRate)
+		{
+			transformHistory.Push(new TransformHistoryEntry(rb.position, rb.rotation, timer));
+			skippedRewindFrames = 0;
+		}
+		else
+		{
+			skippedRewindFrames++;
+		}
+		playTime = timer;
 	}
 
 	public int CompareTo(Character other)
